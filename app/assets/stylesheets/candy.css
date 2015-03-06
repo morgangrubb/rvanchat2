@@ -32,3 +32,30 @@
   /*color: #999;*/
   /*background-color: rgba(153, 153, 153, 0.8);*/
 }
+
+
+
+.message-pane li {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.roster-pane {
+  border-top: none;
+  box-shadow: none;
+}
+
+.roster-pane .user {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+
+
+#chat-tabs .transition {
+  display: none;
+}
+
+#chat-tabs .close {
+  display: none;
+}
