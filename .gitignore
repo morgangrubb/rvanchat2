@@ -20,3 +20,4 @@
 /config/prosody/*
 !/config/prosody/.keep
 /config/constants.rb
+/config/database.yml
