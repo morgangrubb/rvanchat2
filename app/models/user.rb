@@ -5,7 +5,13 @@ class User < ActiveRecord::Base
 
   validates :xmpp_username, :xmpp_password, presence: true
 
+  has_many :room_users, dependent: :destroy
+  has_many :rooms, through: :room_users
+
+  before_create :add_to_default_rooms
   after_create :register_with_prosody
+
+  after_update :handle_prosody_data
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -16,13 +22,13 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
 
       # Now allocate xmpp data
-      # names =
-      #   [auth.info.name.presence, auth.info.nickname.presence].
-      #     compact.collect { |s| s.downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
-
       names =
         [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
-          compact.collect { |s| s.downcase.gsub(/[^a-z]/, '') }
+          compact.collect { |s| s.downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
+
+      # names =
+      #   [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
+      #     compact.collect { |s| s.downcase.gsub(/[^a-z]/, '') }
 
       user.xmpp_username =
         names.find { |name| !User.unscoped.where(xmpp_username: name).exists? }
@@ -33,13 +39,40 @@ class User < ActiveRecord::Base
     end
   end
 
+  def add_to_default_rooms
+    self.rooms += Room.where(default: true).all
+  end
+
   def register_with_prosody
-    # Register the user with prosody
-    command = %(sudo prosodyctl register #{xmpp_username} #{XMPP_HOST} #{xmpp_password})
-    Rails.logger.fatal command
-    %x(#{command})
+    %x(sudo prosodyctl register #{xmpp_username} #{XMPP_HOST} #{xmpp_password})
+  end
 
-    # Add the user to the auto-join set
+  def jid
+    "#{xmpp_username}@#{XMPP_HOST}"
+  end
 
+  def handle_prosody_data
+    User.write_prosody_data
+  end
+
+  def self.write_prosody_data
+    Rails.root.join('config/prosody/group_bookmarks').open('w') do |file|
+      Room.all.each do |room|
+        file << "[#{room.jid}]\n"
+        room.users.each do |user|
+          file << "#{user.jid}\n"
+        end
+      end
+    end
+
+    Rails.root.join('config/prosody/admins.cfg.lua').open('w') do |file|
+      file << "admins = {\n"
+      User.where(admin: true).each do |user|
+        file << %(  "#{user.jid}";\n)
+      end
+      file << "}\n"
+    end
+
+    %x(sudo prosodyctl reload)
   end
 end

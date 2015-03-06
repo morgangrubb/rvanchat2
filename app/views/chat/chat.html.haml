@@ -6,13 +6,13 @@
       %h5 To connect your own XMPP/Jabber client
       %p
         %b User:
-        = "#{current_user.xmpp_username}@#{XMPP_HOST}"
+        = current_user.jid
       %p
         %b Password:
         = current_user.xmpp_password
       %p
         %b Group chat:
-        main@conference.#{XMPP_HOST}
+        = current_user.rooms.first.jid
 
       %hr/
 
@@ -21,12 +21,9 @@
 
 - content_for :javascript do
   :javascript
-    console.log('a')
     $(function() {
-      console.log('b')
       resizeIframe = function() {
         totalAvailable = $( window ).height();
-        console.log('totalAvailable', totalAvailable);
 
         // Find all the children of the parent element
         allChildren = $('#candyContainer').parent().children()
@@ -35,14 +32,10 @@
         otherHeights = 0;
         allChildren.each(function(i) {
           $element = $(this);
-          console.log('element', $element, this)
           if (!$element.is('#candyContainer')) {
-            console.log('c', $element.outerHeight(true))
             otherHeights += $element.outerHeight(true);
           }
         });
-
-        console.log('final', totalAvailable - otherHeights - 60)
 
         // Set our new height
         $('#candyContainer iframe').height(totalAvailable - otherHeights - 20);

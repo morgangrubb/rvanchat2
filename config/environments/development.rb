@@ -1,4 +1,5 @@
-XMPP_HOST = 'lvh.me'
+XMPP_HOST = "lvh.me"
+CONFERENCE_HOST = "conference.#{XMPP_HOST}"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

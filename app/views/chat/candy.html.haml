@@ -45,14 +45,10 @@
           //     -> fetch info from server (NOTE: does only work with openfire server)
           //   ['test@conference.example.com']
           //     -> array of rooms to join after connecting
-          autojoin: ['main@conference.lvh.me']
+          autojoin: #{candy_autojoin_rooms}
         },
         view: { assets: '/candy/res/' }
       });
-
-      // $(Candy).on('candy:view.room.before-add', function() {
-      //   Candy.Core.Action.Jabber.SetNickname('#{escape_javascript current_user.name}');
-      // });
 
       // Plugins!
       // CandyShop.StickySubject.init(); // RoomPanel works
@@ -61,12 +57,7 @@
 
       CandyShop.RoomPanel.init({
         mucDomain: 'conference.lvh.me',
-        roomList: [
-            {
-                name: 'main',
-                jid:  'main@conference.lvh.me'
-            }
-        ],
+        roomList: #{candy_room_panel_user_rooms},
         showIfAllTabClosed: true,
         showTab: false,
         showToolbarIcon: false,
