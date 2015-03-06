@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   end
 
   def self.write_prosody_data
-    Rails.root.join('config/prosody/group_bookmarks').open('w') do |file|
+    Rails.root.join('prosody/group_bookmarks').open('w') do |file|
       Room.all.each do |room|
         file << "[#{room.jid}]\n"
         room.users.each do |user|
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    Rails.root.join('config/prosody/admins.cfg.lua').open('w') do |file|
+    Rails.root.join('prosody/admins.cfg.lua').open('w') do |file|
       file << "admins = {\n"
       User.where(admin: true).each do |user|
         file << %(  "#{user.jid}";\n)

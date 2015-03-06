@@ -17,7 +17,9 @@
 /tmp
 
 # Prosody config files
-/config/prosody/*
-!/config/prosody/.keep
+/prosody/*
+!/prosody/.keep
+
+# Regular stuff
 /config/constants.rb
 /config/database.yml
