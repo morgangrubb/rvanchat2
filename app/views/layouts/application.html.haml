@@ -19,9 +19,9 @@
             = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px; margin-top: 20px;")
 
       - if notice.present?
-        %p.notice= notice
+        .alert.alert-info= notice
       - if alert.present?
-        %p.alert= alert
+        .alert.alert-danger= alert
 
       = yield
 

@@ -9,6 +9,11 @@ class CallbacksController < ApplicationController
     after_auth @user
   end
 
+  def failure
+    flash[:alert] = params[:message]
+    redirect_to root_path
+  end
+
   private
 
   # TODO: Make a job out of this. Queue up operations. Reload prosody after
