@@ -1,0 +1,28 @@
+!!! 5
+%html
+  %head
+    %title
+      r/van chat
+
+    = stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap.min.css"
+    =# stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap-theme.min.css"
+    = yield :stylesheets
+    = csrf_meta_tags
+
+  %body
+
+    .container-fluid
+      .row
+        .col-md-8
+          %a{ href: "/" }
+            = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px; margin-top: 20px;")
+
+      - if notice.present?
+        %p.notice= notice
+      - if alert.present?
+        %p.alert= alert
+
+      = yield
+
+    = javascript_include_tag :application
+    = yield :javascript

@@ -1,0 +1,91 @@
+#candy
+
+- content_for :stylesheets do
+  %link( rel="stylesheet" type="text/css" href="/candy/res/default.css" )
+
+  / %link( rel="stylesheet" type="text/css" href="/plugins/stickysubject/candy.css" )
+  %link( rel="stylesheet" type="text/css" href="/plugins/roomPanel/default.css" )
+  %link( rel="stylesheet" type="text/css" href="/plugins/replies/candy.css" )
+  %link( rel="stylesheet" type="text/css" href="/plugins/notifyme/candy.css" )
+  %link( rel="stylesheet" type="text/css" href="/plugins/namecomplete/candy.css" )
+  / %link( rel="stylesheet" type="text/css" href="/plugins/mucroombar/mucroombar.css" )
+  %link( rel="stylesheet" type="text/css" href="/plugins/inline-images/candy.css" )
+
+- content_for :javascript do
+  %script( type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" )
+  %script( type="text/javascript" src="/candy/libs/libs.min.js" )
+  %script( type="text/javascript" src="/candy/candy.min.js" )
+
+  / %script( type="text/javascript" src="/plugins/stickysubject/candy.js" )
+  %script( type="text/javascript" src="/plugins/slash-commands/slash-commands.js" )
+  %script( type="text/javascript" src="/plugins/roomPanel/roomPanel.js" )
+  %script( type="text/javascript" src="/plugins/replies/candy.js" )
+  %script( type="text/javascript" src="/plugins/refocus/candy.js" )
+  %script( type="text/javascript" src="/plugins/notifyme/candy.js" )
+  %script( type="text/javascript" src="/plugins/notifications/candy.js" )
+  %script( type="text/javascript" src="/plugins/namecomplete/candy.js" )
+  / %script( type="text/javascript" src="/plugins/mucroombar/mucroombar.js" )
+  / %script( type="text/javascript" src="/plugins/me-does/candy.js" )
+  %script( type="text/javascript" src="/plugins/join/candy.js" )
+  %script( type="text/javascript" src="/plugins/inline-videos/candy.js" )
+  %script( type="text/javascript" src="/plugins/inline-images/candy.js" )
+  / %script( type="text/javascript" src="/plugins/emphasis/candy.js" )
+  %script( type="text/javascript" src="/plugins/chatrecall/candy.js" )
+
+  :javascript
+    $(document).ready(function() {
+      Candy.init('http://lvh.me/http-bind/', {
+        core: {
+          // only set this to true if developing / debugging errors
+          debug: false,
+          // autojoin is a *required* parameter if you don't have a plugin (e.g. roomPanel) for it
+          //   true
+          //     -> fetch info from server (NOTE: does only work with openfire server)
+          //   ['test@conference.example.com']
+          //     -> array of rooms to join after connecting
+          autojoin: ['main@conference.lvh.me']
+        },
+        view: { assets: '/candy/res/' }
+      });
+
+      // $(Candy).on('candy:view.room.before-add', function() {
+      //   Candy.Core.Action.Jabber.SetNickname('#{escape_javascript current_user.name}');
+      // });
+
+      // Plugins!
+      // CandyShop.StickySubject.init(); // RoomPanel works
+      CandyShop.SlashCommands.defaultConferenceDomain = 'conference.lvh.me';
+      CandyShop.SlashCommands.init();
+
+      CandyShop.RoomPanel.init({
+        mucDomain: 'conference.lvh.me',
+        roomList: [
+            {
+                name: 'main',
+                jid:  'main@conference.lvh.me'
+            }
+        ],
+        showIfAllTabClosed: true,
+        showTab: false,
+        showToolbarIcon: false,
+        autoDetectRooms: false,
+        roomCacheTime: 600
+      });
+
+      CandyShop.Replies.init();
+      CandyShop.Refocus.init();
+      // CandyShop.NotifyMe.init(); // Complains at getNick
+      CandyShop.Notifications.init();
+      CandyShop.NameComplete.init();
+      // CandyShop.RoomBar.init(); // Forces content down below input box
+      // See https://groups.google.com/d/msg/candy-chat/G_URFxlpHfw/qPM5c8UYJZ0J
+      // CandyShop.MeDoes.init();
+      CandyShop.Join.init();
+      CandyShop.InlineVideos.init(); // Make the videos appear larger
+      CandyShop.InlineImages.initWithFileExtensionsAndMaxImageSize(['png','jpg','gif'], 250); // Imgur?
+      // CandyShop.Emphasis.init(); // Doesn't do what you think it does.
+      CandyShop.ChatRecall.init();
+
+      // And we're done here
+      Candy.Core.connect('#{current_user.xmpp_username}@#{XMPP_HOST}', '#{current_user.xmpp_password}');
+    });
