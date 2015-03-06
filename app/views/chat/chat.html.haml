@@ -2,24 +2,22 @@
   .col-md-9
     %iframe#candy( width="100%" height="100%" src="#{candy_path}" frameBorder="0" scrolling="no" allowTransparency="true" style="background-color: transparent;")
   .col-md-3
-    %h5 To connect your own XMPP/Jabber client
-    %p
-      %b User:
-      = "#{current_user.xmpp_username}@#{XMPP_HOST}"
-    %p
-      %b Password:
-      = current_user.xmpp_password
-    %p
-      %b Group chat:
-      main@conference.#{XMPP_HOST}
+    .well
+      %h5 To connect your own XMPP/Jabber client
+      %p
+        %b User:
+        = "#{current_user.xmpp_username}@#{XMPP_HOST}"
+      %p
+        %b Password:
+        = current_user.xmpp_password
+      %p
+        %b Group chat:
+        main@conference.#{XMPP_HOST}
 
-    - uri = "xmpp:main@conference.#{XMPP_HOST}?join;jid=#{current_user.xmpp_username};password=#{current_user.xmpp_password}"
-    =# link_to uri, uri, target: "_blank"
+      %hr/
 
-    %hr/
-
-    %p.pull-right
-      = link_to "Logout", destroy_user_session_path, method: :delete
+      %p
+        = link_to "Logout", destroy_user_session_path, method: :delete
 
 - content_for :javascript do
   :javascript

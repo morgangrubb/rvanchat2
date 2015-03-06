@@ -4,12 +4,13 @@
     %title
       r/van chat
 
+    = stylesheet_link_tag :application
     = stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap.min.css"
     =# stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap-theme.min.css"
     = yield :stylesheets
     = csrf_meta_tags
 
-  %body
+  %body{ style: "background-image: url(#{asset_path "backgrounds/#{(0..23).to_a.sample}.jpg"})" }
 
     .container-fluid
       .row
