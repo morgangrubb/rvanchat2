@@ -19,3 +19,4 @@
 # Prosody config files
 /config/prosody/*
 !/config/prosody/.keep
+/config/constants.rb
