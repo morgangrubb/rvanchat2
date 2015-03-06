@@ -36,7 +36,7 @@
 
   :javascript
     $(document).ready(function() {
-      Candy.init('http://lvh.me/http-bind/', {
+      Candy.init('/http-bind/', {
         core: {
           // only set this to true if developing / debugging errors
           debug: false,
@@ -52,11 +52,11 @@
 
       // Plugins!
       // CandyShop.StickySubject.init(); // RoomPanel works
-      CandyShop.SlashCommands.defaultConferenceDomain = 'conference.lvh.me';
+      CandyShop.SlashCommands.defaultConferenceDomain = '#{CONFERENCE_HOST}';
       CandyShop.SlashCommands.init();
 
       CandyShop.RoomPanel.init({
-        mucDomain: 'conference.lvh.me',
+        mucDomain: '#{CONFERENCE_HOST}',
         roomList: #{candy_room_panel_user_rooms},
         showIfAllTabClosed: true,
         showTab: false,
