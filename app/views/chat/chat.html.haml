@@ -13,7 +13,7 @@
         %p
           r/vanchat.com is a Jabber/XMPP server running Prosody. This means that
           you can connect any client that supports Multi-User-Chat (MUC).
-        .well#reveal
+        .well.well-sm#reveal
           = link_to "Reveal credentials", "#"
         %p
           Here are some suggested clients by platform. I haven't been able to
@@ -91,7 +91,7 @@
         otherHeights = 0;
         allChildren.each(function(i) {
           $element = $(this);
-          if (!$element.is('#candyContainer')) {
+          if (!$element.is('#candyContainer') && $element.is(":visible")) {
             otherHeights += $element.outerHeight(true);
           }
         });
