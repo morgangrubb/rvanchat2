@@ -1,4 +1,8 @@
 class ChatController < ApplicationController
+  rescue_from Bosh::Error do |exception|
+    #
+  end
+
   def index
     if user_signed_in?
       redirect_to chat_path
@@ -12,6 +16,9 @@ class ChatController < ApplicationController
   end
 
   def candy
+    @credentials =
+      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+
     render layout: "empty"
   end
 

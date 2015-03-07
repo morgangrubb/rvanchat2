@@ -36,7 +36,7 @@
 
   :javascript
     $(document).ready(function() {
-      Candy.init('/http-bind/', {
+      Candy.init('http://#{XMPP_HOST}/http-bind/', {
         core: {
           // only set this to true if developing / debugging errors
           debug: false,
@@ -80,5 +80,12 @@
       CandyShop.ChatRecall.init();
 
       // And we're done here
-      Candy.Core.connect('#{current_user.xmpp_username}@#{XMPP_HOST}', '#{current_user.xmpp_password}');
+      Candy.Core.attach(
+        '#{@credentials[:jid]}',
+        '#{@credentials[:sid]}',
+        #{@credentials[:rid]}
+      );
+
+      // Listen for new messages and manage the title of the parent window
+      // candy:view.message.before-show
     });
