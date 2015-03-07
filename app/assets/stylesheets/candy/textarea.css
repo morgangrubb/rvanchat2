@@ -1,0 +1,25 @@
+/*Something*/
+.message-form textarea {
+  border: 0 none;
+  padding: 5px 10px;
+  font-size: 14px;
+  line-height: 20px;
+  width: 100%;
+  display: block;
+  outline-width: 0;
+  background-color: white;
+}
+
+.message-form-wrapper {
+  height: 52px;
+}
+
+.message-pane-wrapper {
+  margin-bottom: 52px;
+}
+
+.message-form input.submit {
+  height: 46px;
+  padding-left: 20px;
+  padding-right: 20px;
+}

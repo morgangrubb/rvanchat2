@@ -11,6 +11,8 @@
   / %link( rel="stylesheet" type="text/css" href="/plugins/mucroombar/mucroombar.css" )
   %link( rel="stylesheet" type="text/css" href="/plugins/inline-images/candy.css" )
 
+  = stylesheet_link_tag "candy/textarea.css"
+
   = stylesheet_link_tag :candy
 
 - content_for :javascript do
@@ -32,7 +34,9 @@
   %script( type="text/javascript" src="/plugins/inline-videos/candy.js" )
   %script( type="text/javascript" src="/plugins/inline-images/candy.js" )
   / %script( type="text/javascript" src="/plugins/emphasis/candy.js" )
-  %script( type="text/javascript" src="/plugins/chatrecall/candy.js" )
+  / %script( type="text/javascript" src="/plugins/chatrecall/candy.js" )
+
+  = javascript_include_tag "candy/textarea.js"
 
   :javascript
     $(document).ready(function() {
@@ -77,7 +81,8 @@
       CandyShop.InlineVideos.init(); // Make the videos appear larger
       CandyShop.InlineImages.initWithFileExtensionsAndMaxImageSize(['png','jpg','gif'], 250); // Imgur?
       // CandyShop.Emphasis.init(); // Doesn't do what you think it does.
-      CandyShop.ChatRecall.init();
+      // CandyShop.ChatRecall.init();
+      CandyShop.Textarea.init();
 
       // And we're done here
       Candy.Core.attach(
