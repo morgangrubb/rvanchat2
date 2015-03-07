@@ -1,4 +1,7 @@
 class ChatController < ApplicationController
+
+  before_filter :require_login, only: [:chat, :reveal, :candy]
+
   rescue_from Bosh::Error do |exception|
     flash[:alert] = exception.message
     redirect_to register_path
@@ -29,5 +32,14 @@ class ChatController < ApplicationController
 
   def register
     #
+  end
+
+  private
+
+  def require_login
+    unless user_signed_in?
+      flash[:alert] = "You have to be signed in to see that"
+      redirect_to register_path
+    end
   end
 end
