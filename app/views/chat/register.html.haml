@@ -1,7 +1,14 @@
-%h1 Sign-in with
+.row
+  .col-md-4.col-md-offset-4.col-sm-8.col-sm-offset-2.col-xs-12(style="margin-top: 150px")
+    - if notice.present?
+      .alert.alert-info= notice
+    - if alert.present?
+      .alert.alert-danger= alert
 
-%p
-  = link_to user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default btn-lg" do
-    Google
-  = link_to user_omniauth_authorize_path(:facebook), class: "btn btn-default btn-lg" do
-    Facebook
+    .register-container
+      = link_to user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default btn-lg google btn-block" do
+        %i.fa.fa-google.fa-lg
+        Google
+      = link_to user_omniauth_authorize_path(:facebook), class: "btn btn-default btn-lg facebook btn-block" do
+        %i.fa.fa-facebook.fa-lg
+        Facebook

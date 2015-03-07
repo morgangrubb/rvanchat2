@@ -27,11 +27,6 @@
                   %i.fa.fa-sign-out
                   Sign out
 
-      - if notice.present?
-        .alert.alert-info= notice
-      - if alert.present?
-        .alert.alert-danger= alert
-
       = yield
 
     = javascript_include_tag :application

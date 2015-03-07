@@ -25,3 +25,32 @@ body {
 h3.android {
   color: #A4C639;
 }
+
+.register-container {
+  background-color: rgba(68, 68, 68, 0.5);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+a.google {
+  background-color: #d62d20;
+  color: white;
+  border: none;
+  margin-bottom: 10px;
+}
+a.google:hover, a.google:focus {
+  background-color: #ffa700;
+  color: white;
+  border: none;
+}
+
+a.facebook {
+  background-color: #3b5998;
+  color: white;
+  border: none;
+}
+a.facebook:hover, a.facebook:focus {
+  background-color: #8b9dc3;
+  color: white;
+  border: none;
+}
