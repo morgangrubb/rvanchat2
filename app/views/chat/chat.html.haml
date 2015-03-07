@@ -10,17 +10,11 @@
           %span &times;
         %h4.modal-title Integration
       .modal-body
-        %h5 To connect your own XMPP/Jabber client
         %p
-          %b User:
-          = current_user.jid
-        %p
-          %b Password:
-          = current_user.xmpp_password
-        %p
-          %b Group chat:
-          = current_user.rooms.first.jid
-
+          r/vanchat.com is a Jabber/XMPP server running Prosody. This means that
+          you can connect any client that supports Multi-User-Chat (MUC).
+        .well#reveal
+          = link_to "Reveal credentials", "#"
         %p
           Here are some suggested clients by platform. I haven't been able to
           test all of these out personally so if you have better recommendations
@@ -78,9 +72,6 @@
             = link_to "Gajim", "http://www.gajim.org/", target: "_blank"
             Free
 
-      .modal-footer
-        %button.btn.btn-default(type="button" data-dismiss="modal") Close
-
 - content_for :header_right do
   = link_to "#", class: "btn btn-default btn-lg btn-primary", data: { toggle: "modal", target: "#connect" } do
     %i.fa.fa-android
@@ -111,4 +102,9 @@
 
       $(window).resize(resizeIframe);
       resizeIframe();
+
+      $('#reveal a').click(function(event) {
+        event.preventDefault();
+        $('#reveal').load('#{reveal_path}')
+      });
     })

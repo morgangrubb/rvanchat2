@@ -16,6 +16,10 @@ class ChatController < ApplicationController
     #
   end
 
+  def reveal
+    render layout: false
+  end
+
   def candy
     @credentials =
       Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"

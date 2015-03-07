@@ -1,0 +1,9 @@
+%p
+  %b User:
+  = current_user.jid
+%p
+  %b Password:
+  = current_user.xmpp_password
+%p
+  %b Group chat:
+  = current_user.rooms.first.jid

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'chat' => 'chat#chat'
   get 'candy' => 'chat#candy'
   get 'register' => 'chat#register'
+  get 'reveal' => 'chat#reveal'
 
   # You can have the root of your site routed with "root"
   root 'chat#index'
