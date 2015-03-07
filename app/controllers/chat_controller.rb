@@ -1,6 +1,7 @@
 class ChatController < ApplicationController
   rescue_from Bosh::Error do |exception|
-    #
+    flash[:alert] = exception.message
+    redirect_to register_path
   end
 
   def index
