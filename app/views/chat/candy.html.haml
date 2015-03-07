@@ -91,6 +91,46 @@
         #{@credentials[:rid]}
       );
 
-      // Listen for new messages and manage the title of the parent window
-      // candy:view.message.before-show
+
+
+      // How many unread messages do we have in total? There will be a way of
+      // querying Candy directly but this works for now.
+      function getUnreadMessageCount() {
+        total = 0;
+        $('#chat-tabs small.unread').each(function(n) {
+          $element = $(this);
+          if ($element.is(':visible')) {
+            total += parseInt($element.text());
+          }
+        })
+        return total;
+      }
+
+      // Update the top window title with the new message count.
+      function updateUnreadMessageCount() {
+        unread = getUnreadMessageCount();
+        if (unread == 0) {
+          window.top.document.title = "r/van chat"
+        }
+        else {
+          window.top.document.title = "(" + unread.toString() + ") r/van chat"
+        }
+      }
+
+      // Update when we focus or blur the window.
+      $(window).focus(function() {
+        updateUnreadMessageCount()
+      }).blur(function() {
+        updateUnreadMessageCount()
+      });
+
+      // Update when a new message is rendered.
+      $(Candy).on('candy:view.message.after-show', function(event, data) {
+        updateUnreadMessageCount();
+      });
+
+      // Update just after a tab is opened.
+      $('#chat-tabs').click(function(event) {
+        setTimeout(updateUnreadMessageCount, 50);
+      });
     });
