@@ -18,7 +18,7 @@ set :deploy_to, '/home/miggles/rvanchat'
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-set :log_level, :error
+set :log_level, :debug
 
 # Default value for :pty is false
 # set :pty, true
