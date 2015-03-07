@@ -21,3 +21,7 @@ body {
   background-size: cover;
   background-position: center center;
 }
+
+h3.android {
+  color: #A4C639;
+}

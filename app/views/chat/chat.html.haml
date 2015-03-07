@@ -1,23 +1,91 @@
 .row#candyContainer
-  .col-md-9
+  .col-md-12
     %iframe#candy( width="100%" height="100%" src="#{candy_path}" frameBorder="0" scrolling="no" allowTransparency="true" style="background-color: transparent;")
-  .col-md-3
-    .well
-      %h5 To connect your own XMPP/Jabber client
-      %p
-        %b User:
-        = current_user.jid
-      %p
-        %b Password:
-        = current_user.xmpp_password
-      %p
-        %b Group chat:
-        = current_user.rooms.first.jid
 
-      %hr/
+#connect.modal.fade(tabIndex="-1" role="dialog")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(type="button" data-dismiss="modal")
+          %span &times;
+        %h4.modal-title Integration
+      .modal-body
+        %h5 To connect your own XMPP/Jabber client
+        %p
+          %b User:
+          = current_user.jid
+        %p
+          %b Password:
+          = current_user.xmpp_password
+        %p
+          %b Group chat:
+          = current_user.rooms.first.jid
 
-      %p
-        = link_to "Logout", destroy_user_session_path, method: :delete
+        %p
+          Here are some suggested clients by platform. I haven't been able to
+          test all of these out personally so if you have better recommendations
+          please let me know.
+
+        %h3.android
+          %i.fa.fa-android
+          Android
+        %ul
+          %li
+            = link_to "Conversations", "https://play.google.com/store/apps/details?id=eu.siacs.conversations", target: "_blank"
+            $2.99
+          %li
+            = link_to "IM+", "https://play.google.com/store/apps/details?id=de.shapeservices.impluslite&hl=en", target: "_blank"
+            Free
+          %li
+            = link_to "Xabber", "https://play.google.com/store/apps/details?id=com.xabber.android", target: "_blank"
+            Free / $3.00
+
+        %h3.apple
+          %i.fa.fa-apple
+          iPhone / iPad
+        %ul
+          %li
+            = link_to "Boogie Chat", "https://itunes.apple.com/fi/app/boogie-chat/id779423907?mt=8", target: "_blank"
+            Free
+
+        %h3.apple
+          %i.fa.fa-apple
+          OS X
+        %ul
+          %li
+            = link_to "Adium", "https://adium.im/", target: "_blank"
+            Free
+
+        %h3.windows
+          %i.fa.fa-windows
+          Windows
+        %ul
+          %li
+            = link_to "Pidgin", "http://pidgin.im/", target: "_blank"
+            Free
+          %li
+            = link_to "Gajim", "http://www.gajim.org/", target: "_blank"
+            Free
+
+        %h3.linus
+          %i.fa.fa-linux
+          Linux
+        %ul
+          %li
+            = link_to "Pidgin", "http://pidgin.im/", target: "_blank"
+            Free
+          %li
+            = link_to "Gajim", "http://www.gajim.org/", target: "_blank"
+            Free
+
+      .modal-footer
+        %button.btn.btn-default(type="button" data-dismiss="modal") Close
+
+- content_for :header_right do
+  = link_to "#", class: "btn btn-default btn-lg btn-primary", data: { toggle: "modal", target: "#connect" } do
+    %i.fa.fa-android
+    %i.fa.fa-apple
+    %i.fa.fa-windows
 
 - content_for :javascript do
   :javascript

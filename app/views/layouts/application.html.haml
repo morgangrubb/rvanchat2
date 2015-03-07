@@ -6,17 +6,25 @@
 
     = stylesheet_link_tag :application
     = stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap.min.css"
+    = stylesheet_link_tag "//cdn.jsdelivr.net/fontawesome/4.3.0/css/font-awesome.min.css"
     =# stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap-theme.min.css"
     = yield :stylesheets
     = csrf_meta_tags
 
   %body{ style: "background-image: url(#{asset_path "backgrounds/#{(0..23).to_a.sample}.jpg"})" }
 
-    .container-fluid
-      .row
-        .col-md-8
-          %a{ href: "/" }
-            = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px; margin-top: 20px;")
+    .container
+      %header( style="margin-top: 20px;" )
+        .row
+          .col-md-2
+            %a{ href: "/" }
+              = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px")
+          .col-md-10
+            .pull-right
+              = yield :header_right
+              - if user_signed_in?
+                = link_to destroy_user_session_path, method: :delete, class: "btn btn-default btn-lg btn-primary" do
+                  %i.fa.fa-gear
 
       - if notice.present?
         .alert.alert-info= notice
@@ -26,4 +34,5 @@
       = yield
 
     = javascript_include_tag :application
+    = javascript_include_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/js/bootstrap.min.js"
     = yield :javascript
