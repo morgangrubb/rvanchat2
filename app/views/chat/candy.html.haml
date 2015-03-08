@@ -108,13 +108,7 @@
 
       // Update the top window title with the new message count.
       function updateUnreadMessageCount() {
-        unread = getUnreadMessageCount();
-        if (unread == 0) {
-          window.top.document.title = "r/van chat"
-        }
-        else {
-          window.top.document.title = "(" + unread.toString() + ") r/van chat"
-        }
+        window.parent.updateUnreadMessageCount(getUnreadMessageCount());
       }
 
       // Update when we focus or blur the window.

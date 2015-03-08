@@ -10,6 +10,7 @@
     =# stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap-theme.min.css"
     = yield :stylesheets
     = csrf_meta_tags
+    %link(id="favicon" rel="icon" type="image/png" href="#{image_path("favicon.png")}")
 
   %body{ style: "background-image: url(#{asset_path "backgrounds/#{(0..23).to_a.sample}.jpg"})" }
 
@@ -18,7 +19,8 @@
         .row
           .col-md-2
             %a{ href: "/" }
-              = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px")
+              = image_tag("rvanchat_logo.png", style: "height: 50px; width: 50px", id: "logo")
+
           .col-md-10
             .pull-right
               = yield :header_right
