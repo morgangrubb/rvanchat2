@@ -127,4 +127,9 @@
       $('#chat-tabs').click(function(event) {
         setTimeout(updateUnreadMessageCount, 50);
       });
+
+      // Send the user to the login page if we've been logged out
+      $(Candy).on('candy:core.login', function(event, data) {
+        top.location.replace('#{root_url}')
+      });
     });
