@@ -79,7 +79,7 @@
       // CandyShop.MeDoes.init();
       CandyShop.Join.init();
       CandyShop.InlineVideos.init(); // Make the videos appear larger
-      CandyShop.InlineImages.initWithFileExtensionsAndMaxImageSize(['png','jpg','gif'], 250); // Imgur?
+      CandyShop.InlineImages.init({ maxImageSize: 250, spinner: '/plugins/inline-images/spinner.gif' });
       // CandyShop.Emphasis.init(); // Doesn't do what you think it does.
       // CandyShop.ChatRecall.init();
       CandyShop.Textarea.init();
@@ -108,7 +108,9 @@
 
       // Update the top window title with the new message count.
       function updateUnreadMessageCount() {
-        window.parent.updateUnreadMessageCount(getUnreadMessageCount());
+        if (window.parent) {
+          window.parent.updateUnreadMessageCount(getUnreadMessageCount());
+        }
       }
 
       // Update when we focus or blur the window.

@@ -16,6 +16,7 @@ CandyShop.InlineImages = (function(self, Candy, $) {
     fileExtensions: ['png','jpg','jpeg','gif']
     , maxImageSize: 100
     , noInlineSizing: false
+    , spinner: 'ui/candy-plugins/inline-images/spinner.gif'
   };
 
   /** Function: init
@@ -155,6 +156,11 @@ CandyShop.InlineImages = (function(self, Candy, $) {
         }
 
         $(element).replaceWith(buildImageSource(url, width, height))
+
+        // Scroll to the bottom of the pane
+        if(Candy.View.getCurrent().roomJid) {
+          Candy.View.Pane.Room.scrollToBottom(Candy.View.getCurrent().roomJid)
+        }
       });
 
       imageLoader.src = url;
@@ -172,7 +178,7 @@ CandyShop.InlineImages = (function(self, Candy, $) {
    *   (String)
    */
   var buildImageLoaderSource = function(url) {
-    return '<img class="inlineimages-loader" longdesc="' + url + '" src="ui/candy-plugins/inline-images/spinner.gif" />';
+    return '<img class="inlineimages-loader" longdesc="' + url + '" src="' + _options.spinner + '" />';
   };
 
   /** Function: buildImageSource
