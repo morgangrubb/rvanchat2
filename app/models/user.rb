@@ -16,32 +16,38 @@ class User < ActiveRecord::Base
   after_update :handle_prosody_data
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.auth_info = auth.info
+    user =
+      where(email: auth.info.email).first_or_initialize do |user|
+        user.password = Devise.friendly_token[0,20]
 
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.email = auth.info.email
-      user.image_url  = auth.info.image
-      user.name = auth.info.name.presence || auth.info.nickname
-      user.password = Devise.friendly_token[0,20]
+        # Allocate one-time xmpp data
+        names =
+          [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
+            compact.collect { |s| s.downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
 
-      # Now allocate xmpp data
-      names =
-        [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
-          compact.collect { |s| s.downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
+        # names =
+        #   [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
+        #     compact.collect { |s| s.downcase.gsub(/[^a-z]/, '') }
 
-      # names =
-      #   [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
-      #     compact.collect { |s| s.downcase.gsub(/[^a-z]/, '') }
+        user.xmpp_username =
+          names.find { |name| !User.unscoped.where(xmpp_username: name).exists? }
 
-      user.xmpp_username =
-        names.find { |name| !User.unscoped.where(xmpp_username: name).exists? }
+        # TODO: Find much better ways to generate these
+        user.xmpp_username ||= (0...8).map { (65 + rand(26)).chr }.join.downcase
+        user.xmpp_password = (0...8).map { (65 + rand(26)).chr }.join.downcase
+      end
 
-      # TODO: Find much better ways to generate these
-      user.xmpp_username ||= (0...8).map { (65 + rand(26)).chr }.join.downcase
-      user.xmpp_password = (0...8).map { (65 + rand(26)).chr }.join.downcase
-    end
+    # Update regular user data
+    user.auth_info = auth.info
+
+    user.provider = auth.provider
+    user.uid = auth.uid
+    user.email = auth.info.email
+    user.image_url  = auth.info.image
+    user.name = auth.info.name.presence || auth.info.nickname
+
+    user.save!
+    user
   end
 
   def add_to_default_rooms
