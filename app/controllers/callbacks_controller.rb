@@ -22,7 +22,7 @@ class CallbacksController < ApplicationController
   # changing the config.
   def after_auth(user)
     # Push the avatar (Just in case any clients support it)
-    AvatarUpdaterService.new(user).update
+    # AvatarUpdaterService.new(user).update
 
     # We're done here
     sign_in_and_redirect user
