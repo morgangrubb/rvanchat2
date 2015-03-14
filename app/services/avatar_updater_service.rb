@@ -24,7 +24,7 @@ class AvatarUpdaterService < JabberService
       file = Tempfile.new "user_#{user.id}", encoding: 'ascii-8bit'
 
       begin
-        file.write open(user.image_url).read
+        file.write open(user.image_url, allow_unsafe_redirects: true).read
         file.close
         set(Pathname.new(file.path))
       ensure
