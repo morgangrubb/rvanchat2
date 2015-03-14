@@ -35,6 +35,7 @@
   %script( type="text/javascript" src="/plugins/inline-images/candy.js" )
   / %script( type="text/javascript" src="/plugins/emphasis/candy.js" )
   / %script( type="text/javascript" src="/plugins/chatrecall/candy.js" )
+  %script( type="text/javascript" src="/plugins/bookmark/bookmark.js" )
 
   = javascript_include_tag "candy/textarea.js"
 
@@ -82,6 +83,7 @@
       CandyShop.InlineImages.init({ maxImageSize: 250, spinner: '/plugins/inline-images/spinner.gif' });
       // CandyShop.Emphasis.init(); // Doesn't do what you think it does.
       // CandyShop.ChatRecall.init();
+      CandyShop.Bookmark.init();
       CandyShop.Textarea.init();
 
       // And we're done here
@@ -90,8 +92,6 @@
         '#{@credentials[:sid]}',
         #{@credentials[:rid]}
       );
-
-
 
       // How many unread messages do we have in total? There will be a way of
       // querying Candy directly but this works for now.
@@ -134,4 +134,9 @@
       $(Candy).on('candy:core.login', function(event, data) {
         top.location.replace('#{root_url}')
       });
+
+      // Now bookmark the default rooms
+      //
+      // Just a stand-in until I figure out how to get xmpp4r to do it.
+      #{candy_bookmark_rooms}
     });

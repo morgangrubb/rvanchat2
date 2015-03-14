@@ -1,4 +1,12 @@
 module ChatHelper
+  def candy_bookmark_rooms
+    bookmarks = []
+    current_user.rooms.collect(&:jid).each do |jid|
+      bookmarks << "CandyShop.Bookmark.add('#{jid}');"
+    end
+    bookmarks.join("\n")
+  end
+
   def candy_autojoin_rooms
     current_user.rooms.collect(&:jid).to_json
   end
