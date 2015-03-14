@@ -12,6 +12,26 @@
 .message-pane-wrapper {
   /*background-color: #eee;*/
   background-color: rgba(238, 238, 238, 0.8);
+  /*position: relative;*/
+}
+
+.message-pane-wrapper .roombar {
+  position: fixed;
+  margin-top: 0;
+  top: 35px;
+  left: 5px;
+  right: 5px;
+  width: auto;
+  margin-right: 200px;
+  border-bottom: none;
+  background-color: #666;
+  padding: 5px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.message-pane-wrapper .topic {
+  font-size: 1.2em;
 }
 
 .message-pane li:hover {
