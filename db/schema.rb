@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306044334) do
+ActiveRecord::Schema.define(version: 20150314020312) do
 
   create_table "room_users", force: :cascade do |t|
     t.integer  "room_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20150306044334) do
     t.string   "xmpp_username"
     t.string   "xmpp_password"
     t.boolean  "admin",                  default: false, null: false
+    t.string   "image_url"
+    t.text     "auth_info"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

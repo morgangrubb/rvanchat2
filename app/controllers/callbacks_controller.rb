@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class CallbacksController < ApplicationController
   def facebook
     @user = User.from_omniauth(request.env["omniauth.auth"])
@@ -19,6 +21,8 @@ class CallbacksController < ApplicationController
   # TODO: Make a job out of this. Queue up operations. Reload prosody after
   # changing the config.
   def after_auth(user)
+    # Push the avatar (Just in case any clients support it)
+    AvatarUpdaterService.new(user).update
 
     # We're done here
     sign_in_and_redirect user

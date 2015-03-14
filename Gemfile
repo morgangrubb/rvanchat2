@@ -47,6 +47,8 @@ gem 'omniauth-google-oauth2'
 gem 'rest_client'
 gem 'hpricot'
 
+# XMPP
+gem 'xmpp4r'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
