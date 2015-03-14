@@ -8,6 +8,15 @@
   display: block;
   outline-width: 0;
   background-color: white;
+
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  height: 40px;
+  letter-spacing: normal;
+  line-height: 20px;
 }
 
 .message-form-wrapper {
