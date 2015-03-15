@@ -23,9 +23,9 @@ class JabberService
     @vcard_helper ||= Jabber::Vcard::Helper.new(client)
   end
 
-  def perform(&block)
+  def perform
     begin
-      yield &block
+      yield
     ensure
       client.close
       @client = nil
