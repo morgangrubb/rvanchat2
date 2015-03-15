@@ -22,4 +22,14 @@ class JabberService
   def vcard_helper
     @vcard_helper ||= Jabber::Vcard::Helper.new(client)
   end
+
+  def perform(&block)
+    begin
+      yield &block
+    ensure
+      client.close
+      @client = nil
+      @vcard_helper = nil
+    end
+  end
 end

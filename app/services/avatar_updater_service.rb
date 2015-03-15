@@ -35,9 +35,11 @@ class AvatarUpdaterService < JabberService
   end
 
   def set(file)
-    vcard = vcard_helper.get
-    vcard['PHOTO/TYPE'] = %x(file -bi #{file.to_s}).split(';').first
-    vcard['PHOTO/BINVAL'] = Base64.encode64(file.read)
-    vcard_helper.set vcard
+    perform do
+      vcard = vcard_helper.get
+      vcard['PHOTO/TYPE'] = %x(file -bi #{file.to_s}).split(';').first
+      vcard['PHOTO/BINVAL'] = Base64.encode64(file.read)
+      vcard_helper.set vcard
+    end
   end
 end
