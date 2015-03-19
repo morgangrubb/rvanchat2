@@ -1,9 +1,24 @@
-%p
-  %b User:
-  = current_user.jid
-%p
-  %b Password:
-  = current_user.xmpp_password
-%p
-  %b Group chat:
-  = current_user.rooms.first.jid
+.row
+  .col-sm-6
+    %h4 User
+    %p
+      %b Name:
+      %span.src-user-name= current_user.xmpp_username
+    %p
+      %b Password:
+      %span.src-user-password= current_user.xmpp_password
+    %p
+      %b JID:
+      %span.src-user-jid= current_user.jid
+
+  .col-sm-6
+    %h4 Group chat / Multi-user chat
+    %p
+      %b Room:
+      %span.src-room-name= current_user.rooms.first.name
+    %p
+      %b Host:
+      %span.src-room-host= CONFERENCE_HOST
+    %p
+      %b JID:
+      %span.src-room-jid= current_user.rooms.first.jid

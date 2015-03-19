@@ -16,4 +16,8 @@ module ChatHelper
       { name: room.name, jid: room.jid }
     end.to_json
   end
+
+  def reveal(field)
+    content_tag(:code, "Click to reveal", class: "reveal-#{field}")
+  end
 end

@@ -3,71 +3,112 @@
     %iframe#candy( width="100%" height="100%" src="#{candy_path}" frameBorder="0" scrolling="no" allowTransparency="true" style="background-color: transparent;")
 
 #connect.modal.fade(tabIndex="-1" role="dialog")
-  .modal-dialog
+  .modal-dialog.modal-lg
     .modal-content
       .modal-header
         %button.close(type="button" data-dismiss="modal")
           %span &times;
         %h4.modal-title Integration
       .modal-body
-        %p
-          r/vanchat.com is a Jabber/XMPP server running Prosody. This means that
-          you can connect any client that supports Multi-User-Chat (MUC).
-        .well.well-sm#reveal
-          = link_to "Reveal credentials", reveal_url
-        %p
-          Here are some suggested clients by platform. I haven't been able to
-          test all of these out personally so if you have better recommendations
-          please let me know.
+        .row
+          .col-md-6
+            %p
+              r/vanchat.com is a Jabber/XMPP server running Prosody. This means that
+              you can connect any client that supports Multi-User-Chat (MUC).
+          .col-md-6
+            %p
+              Here are some suggested clients by platform. I haven't been able to
+              test all of these out personally so if you have better recommendations
+              please let me know.
 
-        %h3.android
-          %i.fa.fa-android
-          Android
-        %ul
-          %li
-            = link_to "Conversations", "https://play.google.com/store/apps/details?id=eu.siacs.conversations", target: "_blank"
-            $2.99
-          %li
-            = link_to "Xabber", "https://play.google.com/store/apps/details?id=com.xabber.android", target: "_blank"
-            Free / $3.00
+        %div
+          %ul.nav.nav-tabs
+            %li
+              = link_to "#credentials", data: { toggle: 'tab' } do
+                Credentials
 
-        %h3.apple
-          %i.fa.fa-apple
-          iPhone / iPad
-        %ul
-          %li
-            = link_to "Boogie Chat", "https://itunes.apple.com/fi/app/boogie-chat/id779423907?mt=8", target: "_blank"
-            Free
+            %li.active
+              = link_to "#android", data: { toggle: 'tab' } do
+                %i.fa.fa-android
+                Android
 
-        %h3.apple
-          %i.fa.fa-apple
-          OS X
-        %ul
-          %li
-            = link_to "Adium", "https://adium.im/", target: "_blank"
-            Free
+            %li
+              = link_to "#osx", data: { toggle: 'tab' } do
+                %i.fa.fa-apple
+                OS X
 
-        %h3.windows
-          %i.fa.fa-windows
-          Windows
-        %ul
-          %li
-            = link_to "Pidgin", "http://pidgin.im/", target: "_blank"
-            Free
-          %li
-            = link_to "Gajim", "http://www.gajim.org/", target: "_blank"
-            Free
+            %li
+              = link_to "#ios", data: { toggle: 'tab' } do
+                %i.fa.fa-apple
+                iPhone / iPad
 
-        %h3.linus
-          %i.fa.fa-linux
-          Linux
-        %ul
-          %li
-            = link_to "Pidgin", "http://pidgin.im/", target: "_blank"
-            Free
-          %li
-            = link_to "Gajim", "http://www.gajim.org/", target: "_blank"
-            Free
+            %li
+              = link_to "#windows", data: { toggle: 'tab' } do
+                %i.fa.fa-windows
+                Windows
+
+            %li
+              = link_to "#linux", data: { toggle: 'tab' } do
+                %i.fa.fa-linux
+                Linux
+
+          .tab-content
+            #credentials.tab-pane
+              #reveal
+                %h4= link_to "Reveal credentials", reveal_url
+
+            #android.tab-pane.active
+              %h4
+                = link_to "https://play.google.com/store/apps/details?id=eu.siacs.conversations", target: "_blank" do
+                  Conversations
+                  %small $2.99
+                %small
+                  = link_to "Instructions", "#instructions-android-conversations", data: { toggle: "collapse" }
+
+              #instructions-android-conversations.collapse
+                .well.well-sm= render 'instructions/conversations'
+
+              %h4
+                = link_to "https://play.google.com/store/apps/details?id=com.xabber.android", target: "_blank" do
+                  Xabber
+                  %small Free / $3.00
+
+            #osx.tab-pane
+              %h4
+                = link_to "https://adium.im/", target: "_blank" do
+                  Adium
+                  %small Free
+                %small
+                  = link_to "Instructions", "#instructions-osx-adium", data: { toggle: "collapse" }
+
+              #instructions-osx-adium.collapse
+                .well.well-sm= render 'instructions/adium'
+
+            #ios.tab-pane
+              %h4
+                = link_to "https://itunes.apple.com/fi/app/boogie-chat/id779423907?mt=8", target: "_blank" do
+                  Boogie Chat
+                  %small Free
+
+            #windows.tab-pane
+              %h4
+                = link_to "http://pidgin.im/", target: "_blank" do
+                  Pidgin
+                  %small Free
+              %h4
+                = link_to "http://www.gajim.org/", target: "_blank" do
+                  Gajim
+                  %small Free
+
+            #linux.tab-pane
+              %h4
+                = link_to "http://pidgin.im/", target: "_blank" do
+                  Pidgin
+                  %small Free
+              %h4
+                = link_to "http://www.gajim.org/", target: "_blank" do
+                  Gajim
+                  %small Free
 
 - content_for :header_right do
   = link_to "#", class: "btn btn-default btn-lg btn-primary", data: { toggle: "modal", target: "#connect" } do
