@@ -1,6 +1,12 @@
 captureRevealClicks = ->
-  $('#reveal a').click (event) ->
+  $('#reveal').on 'click', 'a', (event) ->
     event.preventDefault()
-    $('#reveal').load('#{reveal_path}')
+    href = event.target.getAttribute('href')
+    $('#reveal').html(
+      """
+        <i class="fa fa-spinner fa-pulse"></i> Loading
+      """
+    )
+    $('#reveal').load(href)
 
 $(captureRevealClicks)
