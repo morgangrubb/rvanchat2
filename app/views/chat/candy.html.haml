@@ -108,11 +108,16 @@
       }
 
       // Update the top window title with the new message count.
-      function updateUnreadMessageCount() {
+      function updateUnreadMessageCount(count) {
         if (window.parent) {
-          window.parent.updateUnreadMessageCount(getUnreadMessageCount());
+          if (typeof count == 'undefined') {
+            count = getUnreadMessageCount();
+          }
+          window.parent.updateUnreadMessageCount(count);
         }
       }
+
+      window.updateUnreadMessageCount = updateUnreadMessageCount
 
       // Update when we focus or blur the window.
       $(window).focus(function() {
@@ -133,6 +138,7 @@
 
       // Send the user to the login page if we've been logged out
       $(Candy).on('candy:core.login', function(event, data) {
+        updateUnreadMessageCount(-1);
         top.location.replace('#{root_url}')
       });
 
