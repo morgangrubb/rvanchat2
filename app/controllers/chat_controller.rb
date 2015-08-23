@@ -58,6 +58,14 @@ class ChatController < ApplicationController
 
   private
 
+  def default_chat_room
+    case Rails.env
+    when 'development' then 'main'
+    when 'production' then 'chat'
+    end
+  end
+  helper_method :default_chat_room
+
   def require_login
     unless user_signed_in?
       flash[:alert] = "You have to be signed in to see that"

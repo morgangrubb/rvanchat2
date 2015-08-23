@@ -17,7 +17,7 @@
     require(['converse'], function (converse) {
       converse.listen.on('ready', function(event) {
         console.log('ready', event)
-        converse.rooms.open('main@#{CONFERENCE_HOST}');
+        converse.rooms.open('#{default_chat_room}@#{CONFERENCE_HOST}');
       });
 
       converse.listen.on('chatBoxOpened', function (event, chatbox) {
