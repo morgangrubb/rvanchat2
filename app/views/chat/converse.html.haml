@@ -1,0 +1,61 @@
+- content_for :stylesheets do
+  %meta(charset="utf-8")
+  %meta(meta http-equiv="Content-Type" content="text/html; charset=utf-8")
+  %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  = stylesheet_link_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/css/bootstrap.min.css"
+  = stylesheet_link_tag "//cdn.jsdelivr.net/fontawesome/4.3.0/css/font-awesome.min.css"
+  = stylesheet_link_tag "/converse.js-0.9.4/css/converse.min.css"
+  :css
+    body {
+      background-color: transparent;
+    }
+
+- content_for :javascript do
+  = javascript_include_tag "/converse.js-0.9.4/builds/converse.min.js"
+  = javascript_include_tag "//cdn.jsdelivr.net/bootstrap/3.3.2/js/bootstrap.min.js"
+  :javascript
+    require(['converse'], function (converse) {
+      converse.listen.on('ready', function(event) {
+        console.log('ready', event)
+        converse.rooms.open('main@#{CONFERENCE_HOST}');
+      });
+
+      converse.listen.on('chatBoxOpened', function (event, chatbox) {
+        console.log(event, chatbox)
+      });
+
+      converse.listen.on('chatRoomOpened', function (event, chatbox) {
+        console.log(event, chatbox)
+      });
+
+      converse.listen.on('chatBoxFocused', function (event, chatbox) {
+        console.log(event, chatbox)
+      });
+
+      converse.listen.on('message', function (event, messageXML) {
+        console.log(event, messageXML)
+      });
+
+      converse.initialize({
+        bosh_service_url: 'http://#{XMPP_HOST}/http-bind/',
+        keepalive: true,
+        message_carbons: true,
+        play_sounds: false,
+        roster_groups: false,
+        show_controlbox_by_default: false,
+        xhr_user_search: false,
+        auto_list_rooms: true,
+        jid: "#{current_user.jid}",
+        prebind_url: "#{prebind_url}",
+        authentication: "prebind",
+        allow_logout: false,
+        allow_contact_requests: false,
+        allow_contact_removal: false,
+        allow_registration: false,
+        animate: false,
+        forward_messages: true,
+        hide_muc_server: true,
+        storage: 'local',
+        debug: false
+      });
+    });
