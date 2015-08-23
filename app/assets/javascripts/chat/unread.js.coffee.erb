@@ -7,12 +7,13 @@ class UnreadTitleHandler
     else
       document.title = "(#{unread.toString()}) r/van chat"
 
-class UnreadFaviconHandler
-  constructor: ->
+class UnreadFaviconAnimator
+  constructor: (animationClass) ->
     @animation = null
-    @previousValue = 0
-    @latestValue = 0
+    @previousValue = -1
+    @latestValue = -1
     @interruptValue = null
+    @animationClass = animationClass
 
     @target = document.getElementById 'favicon'
 
@@ -29,7 +30,7 @@ class UnreadFaviconHandler
     # Reset the @interruptValue if we get here
     @interruptValue = null
 
-    @animation = new FaviconAnimation(
+    @animation = new @animationClass(
       startValue: @latestValue
       target: @target
       endValue: unread
@@ -44,40 +45,38 @@ class UnreadFaviconHandler
 
     @animation.start()
 
-class FaviconAnimation
+class FaviconRenderer
+  @imageClear = ->
+    return @imageClearElement if @imageClearElement?
+    @imageClearElement = document.createElement 'img'
+    @imageClearElement.src = '<%= asset_data_uri "favicon_empty_64x64.png" %>'
+    @imageClearElement
+
+  @imageUnread = ->
+    return @imageUnreadElement if @imageUnreadElement?
+    @imageUnreadElement = document.createElement 'img'
+    @imageUnreadElement.src = '<%= asset_data_uri "favicon_empty_unread_64x64.png" %>'
+    @imageUnreadElement
+
   constructor: (options = {}) ->
     @startValue = options.startValue.toString()
     @endValue = options.endValue.toString()
     @target = options.target
     @onComplete = options.onComplete
 
-    @fps = window.chat?.fps || 12 # Target, may not actually hit it
-    @duration = window.chat?.duration || 2000
-    @frames = @duration / 1000 * @fps
-    @interval = @duration / @frames
-
-    if window.chat?
-      console.log "render", @fps, @duration, @frames, @interval
-
+    FaviconRenderer.imageUnread()
+    FaviconRenderer.imageClear()
     @constructCanvas()
-    @constructImage()
 
   constructCanvas: ->
     @canvas = document.createElement 'canvas'
     @context = @canvas.getContext '2d'
 
-  constructImage: ->
-    @image = document.createElement 'img'
-    @image.src = '<%= asset_data_uri "favicon_empty_64x64.png" %>'
-
-  easeInOutCubic = (t, b, c, d) ->
-    t /= d/2
-    return c/2*t*t*t + b if t < 1
-    t -= 2
-    return c/2*(t*t*t + 2) + b
-
   addMessage: (value, verticalPosition) ->
-    if value is '0'
+    if value is '-1'
+      message = ''
+      horizontalPosition = 0
+    else if value is '0'
       message = "r"
       horizontalPosition = 32
     else if value.length is 1
@@ -93,46 +92,123 @@ class FaviconAnimation
     @context.fillText message, horizontalPosition, verticalPosition
 
   start: ->
-    @startTime = Date.now()
-    @endTime = @startTime + @duration
+    console.log 'endValue', @endValue
 
-    currentFrame = 0
-    animator = =>
-      @canvas.height = @canvas.width = 64
-      @context.drawImage @image, 0, 0
-      @context.font = 'bold 52px "helvetica", sans-serif'
-      @context.fillStyle = '#ffffff'
+    imageSrc =
+      if @endValue is '0'
+        console.log 'using clear'
+        FaviconRenderer.imageClear()
+      else
+        console.log 'using tinted'
+        FaviconRenderer.imageUnread()
 
-      # It works? It works!
-      verticalOffset = easeInOutCubic currentFrame, 0, 59, @frames
+    @canvas.height = @canvas.width = 64
+    @context.drawImage imageSrc, 0, 0
+    @context.font = 'bold 52px "helvetica", sans-serif'
+    @context.fillStyle = '#ffffff'
 
-      # Advance the frame counter
-      currentFrame += 1
+    # Position the text
+    @addMessage @endValue, 59
 
-      # Schedule the next frame while we draw the current one
-      if currentFrame <= @frames
-        setTimeout animator, @interval
+    # Render
+    @target.setAttribute('sizes', '64x64');
+    @target.href = @canvas.toDataURL('image/png');
 
-      # Position the text
-      @addMessage @startValue, verticalOffset + 59
-      @addMessage @endValue, verticalOffset
-
-      # Render
-      @target.setAttribute('sizes', '64x64');
-      @target.href = @canvas.toDataURL('image/png');
-
-      # Finally run the onComplete if we're finished
-      @onComplete() if currentFrame > @frames && @onComplete?
-
-    # Start the animation
-    setTimeout animator, 1
+    # Finally run the onComplete
+    @onComplete()
 
     true
 
+# class FaviconAnimation
+#   constructor: (options = {}) ->
+#     @startValue = options.startValue.toString()
+#     @endValue = options.endValue.toString()
+#     @target = options.target
+#     @onComplete = options.onComplete
+
+#     @fps = window.chat?.fps || 12 # Target, may not actually hit it
+#     @duration = window.chat?.duration || 2000
+#     @frames = @duration / 1000 * @fps
+#     @interval = @duration / @frames
+
+#     if window.chat?
+#       console.log "render", @fps, @duration, @frames, @interval
+
+#     @constructCanvas()
+#     @constructImage()
+
+#   constructCanvas: ->
+#     @canvas = document.createElement 'canvas'
+#     @context = @canvas.getContext '2d'
+
+#   constructImage: ->
+#     @image = document.createElement 'img'
+#     @image.src = '<%= asset_data_uri "favicon_empty_64x64.png" %>'
+
+#   easeInOutCubic = (t, b, c, d) ->
+#     t /= d/2
+#     return c/2*t*t*t + b if t < 1
+#     t -= 2
+#     return c/2*(t*t*t + 2) + b
+
+#   addMessage: (value, verticalPosition) ->
+#     if value is '0'
+#       message = "r"
+#       horizontalPosition = 32
+#     else if value.length is 1
+#       message = value
+#       horizontalPosition = 32
+#     else if (value.length >= 3)
+#       message = "✘"
+#       horizontalPosition = 24
+#     else
+#       message = value
+#       horizontalPosition = 4
+
+#     @context.fillText message, horizontalPosition, verticalPosition
+
+#   start: ->
+#     @startTime = Date.now()
+#     @endTime = @startTime + @duration
+
+#     currentFrame = 0
+#     animator = =>
+#       @canvas.height = @canvas.width = 64
+#       @context.drawImage @image, 0, 0
+#       @context.font = 'bold 52px "helvetica", sans-serif'
+#       @context.fillStyle = '#ffffff'
+
+#       # It works? It works!
+#       verticalOffset = easeInOutCubic currentFrame, 0, 59, @frames
+
+#       # Advance the frame counter
+#       currentFrame += 1
+
+#       # Schedule the next frame while we draw the current one
+#       if currentFrame <= @frames
+#         setTimeout animator, @interval
+
+#       # Position the text
+#       @addMessage @startValue, verticalOffset + 59
+#       @addMessage @endValue, verticalOffset
+
+#       # Render
+#       @target.setAttribute('sizes', '64x64');
+#       @target.href = @canvas.toDataURL('image/png');
+
+#       # Finally run the onComplete if we're finished
+#       @onComplete() if currentFrame > @frames && @onComplete?
+
+#     # Start the animation
+#     setTimeout animator, 1
+
+#     true
+
 $ ->
   if document.createElement('canvas').getContext
-    handler = new UnreadFaviconHandler()
+    handler = new UnreadFaviconAnimator(FaviconRenderer)
   else
     handler = new UnreadTitleHandler()
 
   window.updateUnreadMessageCount = (count) -> handler.update(count)
+  window.updateUnreadMessageCount(0)
