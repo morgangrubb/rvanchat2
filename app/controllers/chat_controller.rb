@@ -16,7 +16,16 @@ class ChatController < ApplicationController
   end
 
   def chat
-    #
+    @ajax_client_path =
+      if params[:converse]
+        converse_path
+      else
+        candy_path
+      end
+  end
+
+  def converse
+    render layout: "empty"
   end
 
   def reveal
@@ -32,6 +41,19 @@ class ChatController < ApplicationController
 
   def register
     #
+  end
+
+  def prebind
+    credentials =
+      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+
+    # render json: {
+    #   jid: current_user[:jid],
+    #   sid: credentials[:sid],
+    #   rid: credentials[:rid]
+    # }
+
+    render json: credentials
   end
 
   private

@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   #
   get 'chat' => 'chat#chat'
   get 'candy' => 'chat#candy'
+  get 'converse' => 'chat#converse'
   get 'register' => 'chat#register'
   get 'reveal' => 'chat#reveal'
+  get 'prebind' => 'chat#prebind'
 
   # You can have the root of your site routed with "root"
   root 'chat#index'
