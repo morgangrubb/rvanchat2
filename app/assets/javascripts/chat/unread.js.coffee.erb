@@ -92,14 +92,10 @@ class FaviconRenderer
     @context.fillText message, horizontalPosition, verticalPosition
 
   start: ->
-    console.log 'endValue', @endValue
-
     imageSrc =
       if @endValue is '0'
-        console.log 'using clear'
         FaviconRenderer.imageClear()
       else
-        console.log 'using tinted'
         FaviconRenderer.imageUnread()
 
     @canvas.height = @canvas.width = 64
