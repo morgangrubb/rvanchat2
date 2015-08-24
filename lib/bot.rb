@@ -58,6 +58,12 @@ end
 
 message /^hi,? @?wopr/i do |message, params|
   post "Hi, #{message.user}"
+
+  # TODO: Some mechanism for checking for admins
+  if message.user == /^(morgan|chris)/i
+    post "Would you like to play a game? I currently don't know how but I will. Someday." => message.user
+  end
+
   post "Use !help for a list of commands" => message.user
 end
 
@@ -72,6 +78,7 @@ These commands will eventually work:
   !youtube
   !meme
   !stats
+  !game
 
 I will also eventually capture and parse Twitter, Facebook and Youtube links, too.
 
