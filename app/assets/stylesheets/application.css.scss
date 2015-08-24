@@ -53,3 +53,27 @@ a.facebook:hover, a.facebook:focus {
   color: white;
   border: none;
 }
+
+
+
+.links {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  h2 {
+    margin-top: 0px;
+  }
+  ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    li {
+      padding: 5px 0;
+      border-bottom: 1px white solid;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}

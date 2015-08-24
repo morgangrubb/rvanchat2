@@ -1,5 +1,6 @@
 XMPP_HOST = "rvanchat.com"
 CONFERENCE_HOST = "room.#{XMPP_HOST}"
+MAIN_ROOM = "chat"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

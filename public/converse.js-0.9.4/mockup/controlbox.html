@@ -7,7 +7,7 @@
     <meta name="description" content="Converse.js: Mockup" />
     <link type="text/css" href="../css/theme.css" rel="stylesheet" media="screen" />
     <link type="text/css" href="../css/converse.css" rel="stylesheet" media="screen" />
-    <script src="../components/jquery/dist/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 
@@ -168,7 +168,7 @@
                         <dd class="away current-xmpp-contact">
                             <a class="open-chat" title="Click to chat with this contact" href="#">
                                 <span class="icon-away" title="this contact is away"></span>
-                                Allan Donald 
+                                Allan Donald
                             </a>
                             <a class="remove-xmpp-contact icon-remove" title="Click to remove this contact" href="#"></a>
                         </dd>
@@ -204,7 +204,7 @@
                         <dd class="online current-xmpp-contact">
                             <a class="open-chat" title="Click to chat with this contact" href="#">
                                 <span class="icon-online" title="This contact is online"></span>
-                                James Small 
+                                James Small
                             </a>
                             <a class="remove-xmpp-contact icon-remove" title="Click to remove this contact" href="#"></a>
                         </dd>
@@ -251,11 +251,11 @@
                 <dl id="available-chatrooms">
                     <dt>Rooms on conference.opkode.im</dt>
                     <dd class="available-chatroom">
-                        <a class="open-room" 
+                        <a class="open-room"
                             data-room-jid="converse.js@conference.opkode.im"
                             title="Click to open this room" href="#">Special chatroom with a long name (2)</a>
-                        <a class="room-info icon-room-info" 
-                            data-room-jid="converse.js@conference.opkode.im" 
+                        <a class="room-info icon-room-info"
+                            data-room-jid="converse.js@conference.opkode.im"
                             title="Show more information on this room" href="#">&nbsp;</a>
                         <div class="room-info">
                             <p class="room-info"><strong>Description:</strong></p>
@@ -279,16 +279,16 @@
 
 <script>
 $(document).ready(function () {
-    $('a[href=#chatrooms]').click(function (ev) { 
+    $('a[href=#chatrooms]').click(function (ev) {
         switchTab(ev);
     });
     $('a[href=#users]').click(function (ev) {
-        switchTab(ev); 
-    });
-    $('a[href=#register]').click(function (ev) { 
         switchTab(ev);
     });
-    $('a[href=#login]').click(function (ev) { 
+    $('a[href=#register]').click(function (ev) {
+        switchTab(ev);
+    });
+    $('a[href=#login]').click(function (ev) {
         switchTab(ev);
     });
 

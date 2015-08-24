@@ -33,8 +33,15 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'foreman'
 gem 'thin'
 
+gem 'jabbot', require: nil
+gem 'unirest'
+
 gem 'therubyracer'
 gem 'devise'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
+gem 'rinku'
 
 gem 'omniauth'
 gem 'omniauth-facebook'

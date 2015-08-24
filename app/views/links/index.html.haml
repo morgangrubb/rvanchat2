@@ -1,0 +1,16 @@
+.links
+  %h2 Links
+  %ul
+    - @links.each do |link|
+      %li
+        %h5
+          %span.user_name
+            #{link.message.user_name}
+          %span.small
+            %span.time
+              = time_ago_in_words link.created_at
+              ago
+        .message
+          = auto_link(CGI::unescape(link.message.text), :all, { target: '_blank' })
+
+= paginate @links, theme: 'twitter-bootstrap-3'

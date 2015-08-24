@@ -1,4 +1,4 @@
-require 'rest_client'
+require 'rest-client'
 require 'builder'
 require 'rexml/document'
 require 'base64'

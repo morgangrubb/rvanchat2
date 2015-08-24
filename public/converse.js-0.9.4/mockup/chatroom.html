@@ -7,7 +7,7 @@
     <meta name="description" content="Converse.js: Mockup" />
     <link type="text/css" href="../css/theme.css" rel="stylesheet" media="screen" />
     <link type="text/css" href="../css/converse.css" rel="stylesheet" media="screen" />
-    <script src="../components/jquery/dist/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 
@@ -81,11 +81,11 @@
 
 <script>
 $(document).ready(function () {
-    $('a[href=#chatrooms]').click(function (ev) { 
+    $('a[href=#chatrooms]').click(function (ev) {
         switchTab(ev);
     });
     $('a[href=#users]').click(function (ev) {
-        switchTab(ev); 
+        switchTab(ev);
     });
 
     $("a.choose-xmpp-status").click(function (ev) {
