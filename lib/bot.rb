@@ -7,11 +7,11 @@ require 'jabbot'
 require 'uri'
 
 configure do |conf|
-  conf.nick = "@bot"
+  conf.nick = "bot"
   conf.login = "bot@#{XMPP_HOST}"
   conf.channel = MAIN_ROOM
   conf.server = CONFERENCE_HOST
-  conf.password = 'thisisthebotpassword'
+  conf.password = "thisisthebotpassword"
 end
 
 ACTUAL_ROOM = Room.where(name: MAIN_ROOM).first
