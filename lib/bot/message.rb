@@ -47,7 +47,7 @@ module Bot
     end
 
     def parsed
-      @parse ||= URI.parse(url)
+      @parse ||= URI.parse(@url)
     end
 
     def processed?
