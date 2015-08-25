@@ -1,29 +1,23 @@
 module Bot
   class Message
-    def initialize(message)
-      @message =
-        if message.is_a? Bot::Message
-          message
-        else
-          Bot::Message.new(message)
-        end
-
+    def initialize(jabbot_message)
+      @jabbot_message = jabbot_message
       @processed = false
     end
 
     def user_name
-      @message.user
+      @jabbot_message.user
     end
 
     def user
       return @user if defined? @user
-      @user = User.where(xmpp_username: @message.user).first
+      @user = User.where(xmpp_username: @jabbot_message.user).first
     end
 
     def links
       return @links if defined? @links
       @links =
-        URI.extract(@message.text).collect { |url| Link.new(url) }
+        URI.extract(@jabbot_message.text).collect { |url| Link.new(url) }
     end
 
     def processed?
@@ -37,7 +31,7 @@ module Bot
     private
 
     def method_missing(method_id, *args)
-      @message.send method_id, *args
+      @jabbot_message.send method_id, *args
     end
   end
 
