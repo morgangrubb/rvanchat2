@@ -17,19 +17,19 @@ module Bot
       end
 
       def join_room(message, params)
-        noop
+        # Do nothing
       end
 
       def leave_room(message, params)
-        noop
+        # Do nothing
       end
 
       def public_message(message, params)
-        noop
+        # Do nothing
       end
 
       def private_message(message, params)
-        noop
+        # Do nothing
       end
 
       def say(message, options = {})
