@@ -7,11 +7,21 @@ require 'jabbot'
 require 'uri'
 
 # Where we're stuffing logs and things.
-redis = Rvanchat.redis :new, db: 1
+def redis
+  @redis ||= Rvanchat.redis :new, db: 1
+end
+
+def twitter_client
+  @twitter_client ||=
+    Twitter::REST::Client.new do |config|
+      config.consumer_key    = "HJGhUO8wA8vzes0qTzNgQlmTQ"
+      config.consumer_secret = "a8uv6XjPsYOOfZn5IN3h90Dft73w9k10y09upwwqFJzOTPwWgI"
+    end
+end
 
 BLOCKED_HOSTS = %w[ localhost 127.0.0.1 ]
 
-DEFAULT_ENCODINGS = %w[ utf8 utf-8 UTF8 UTF-8 ]
+DEFAULT_ENCODINGS = %w[ UTF-8 UTF8 utf8 utf-8 ]
 
 def log(com, msg)
   $stderr.puts "#{msg.time} | #{com} | <#{msg.user}> #{msg.text}"
@@ -46,13 +56,8 @@ def twitter(params)
 
   if twitter_id
     begin
-      resp = open("#{TWITTER_BASE}#{twitter_id}.#{TWITTER_FORMAT}").read
-      json = JSON.parse(resp)
-      time = Time.parse(json["created_at"]).strftime("%d.%m.%Y %H:%M")
-      user = json["user"]["screen_name"]
-      mess = json["text"]
-
-      "[#{time}] #{user}: #{mess}"
+      tweet = twitter_client.status(twitter_id)
+      "[#{tweet.created_at}] #{tweet.user.name}: #{tweet.full_text}"
     rescue OpenURI::HTTPError => e
       "Not a link? Twitter failure? Pete only knows."
     end
@@ -60,13 +65,13 @@ def twitter(params)
 end
 
 configure do |conf|
-  conf.nick = "@wopr"
+  conf.nick = "@wopr#{Rails.env.development? ? '-dev' : ''}"
   conf.login = "bot@#{XMPP_HOST}"
   conf.channel = MAIN_ROOM
   conf.server = CONFERENCE_HOST
   conf.password = "thisisthebotpassword"
-  conf.log_level = 'info'
-  conf.log_file = "/home/ubuntu/rvanchat/current/log/bot.log"
+  # conf.log_level = 'info'
+  # conf.log_file = "/home/ubuntu/rvanchat/current/log/bot.log"
   conf.debug = true
 end
 
@@ -117,7 +122,7 @@ message do |message, params|
     begin
       next if message.text =~ /\A\s*!\w+/
 
-      uri = URI.parse(params[0])
+      uri = URI.parse(url)
       if !BLOCKED_HOSTS.include?(uri.host)
         case uri.to_s
         when TWITTER_REGEX
@@ -145,12 +150,12 @@ message do |message, params|
                 end
 
                 if send_encoding && !DEFAULT_ENCODINGS.include?(send_encoding)
-                  title = Iconv.iconv(DEFAULT_ENCODINGS.first, send_encoding, title)[0]
+                  title = title.encode(DEFAULT_ENCODINGS.first)
                 end
 
-                post "Title: #{title} (at #{uri.host} )"
+                post "Title: #{title} (at #{uri.host})"
               else
-                post "Title: <empty> (at #{uri.host} )"
+                post "Title: <empty> (at #{uri.host})"
               end
             end
           end
@@ -159,7 +164,7 @@ message do |message, params|
 
     rescue SocketError => e
       if e.message == "getaddrinfo: No address associated with hostname"
-        post "Die angegebene Seite existiert nicht."
+        post "Couldn't resolve #{url}"
       else
         $stderr.puts "We're on line #{__LINE__}"
         $stderr.puts e.inspect
@@ -198,6 +203,25 @@ I will also eventually capture and parse Twitter, Facebook and Youtube links, to
 For the time being I'm a bit stupid.
   EOS
   post response => message.user
+end
+
+# example taken from
+# http://ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
+# handles redirects correctly
+def fetch(uri_str, limit = 10)
+  $stderr.puts "#{uri_str.to_s}, #{limit}"
+
+  # You should choose better exception.
+  #  Nope, I won't.
+  raise ArgumentError, 'HTTP redirect too deep' if limit == 0
+
+  response = Net::HTTP.get_response(uri_str.kind_of?(URI) ? uri_str : URI.parse(uri_str))
+  case response
+  when Net::HTTPSuccess     then response
+  when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+  else
+    response.error!
+  end
 end
 
 # TODO: Giphy api

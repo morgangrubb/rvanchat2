@@ -37,6 +37,7 @@ gem 'redis'
 
 gem 'jabbot', require: nil, github: 'badboy/jabbot'
 gem 'unirest'
+gem 'twitter'
 
 gem 'therubyracer'
 gem 'devise'
