@@ -28,6 +28,11 @@ module Bot
       @processed = true
     end
 
+    def command?
+      return @command if defined? @command
+      @command = @jabbot_message.text =~ /\A\s*!\w+/
+    end
+
     private
 
     def method_missing(method_id, *args)

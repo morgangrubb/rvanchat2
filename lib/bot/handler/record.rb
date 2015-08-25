@@ -2,6 +2,8 @@ module Bot
   module Handler
     class Record < Bot::Handler::Base
       def public_message(message, params)
+        return if message.command?
+
         # Stash this message in the database
         stored_message =
           ::Message.create(

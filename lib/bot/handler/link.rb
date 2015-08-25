@@ -6,7 +6,7 @@ module Bot
       DEFAULT_ENCODINGS = %w[ UTF-8 UTF8 utf8 utf-8 ]
 
       def public_message(message, params)
-        return if message.text =~ /\A\s*!\w+/
+        return if message.command?
 
         message.links.each do |link|
           next if link.processed?
