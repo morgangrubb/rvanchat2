@@ -55,7 +55,7 @@ module Bot
       end
 
       def enabled?
-        @options[:controller].enabled? self.class.name.underscore.split('_').last
+        @options[:controller].handler_enabled? self.class.name.underscore.split('_').last
       end
 
     end

@@ -21,7 +21,7 @@ module Bot
         redis.smembers("enabled_handlers") - %w(help control)
       end
 
-      def enabled?(handler)
+      def handler_enabled?(handler)
         return true if %w(help control)
         redis.sismember("enabled_handlers", handler)
       end
