@@ -33,6 +33,8 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'foreman'
 gem 'thin'
 
+gem 'redis'
+
 gem 'jabbot', require: nil, github: 'badboy/jabbot'
 gem 'unirest'
 

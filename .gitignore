@@ -25,3 +25,4 @@
 # Regular stuff
 /config/constants.rb
 /config/database.yml
+/config/redis.yml
