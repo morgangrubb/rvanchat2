@@ -1,7 +1,13 @@
 module Bot
   class Message
     def initialize(message)
-      @message = message
+      @message =
+        if message.is_a? Bot::Message
+          message
+        else
+          Bot::Message.new(message)
+        end
+
       @processed = false
     end
 
