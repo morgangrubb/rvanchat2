@@ -13,6 +13,10 @@ module Bot
         end
       end
 
+      def enabled?
+        true
+      end
+
       private
 
       def say_help(user_name)
