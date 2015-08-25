@@ -54,8 +54,10 @@ HANDLERS = [
 ]
 
 def feed_action_to_handlers(action, message, params)
+  bot_message = Bot::Message.new(message)
+
   HANDLERS.each do |handler|
-    handler.process(action, message, params)
+    handler.process(action, bot_message, params)
   end
 end
 
