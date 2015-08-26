@@ -39,6 +39,7 @@ gem 'jabbot', require: nil, github: 'badboy/jabbot'
 gem 'unirest'
 gem 'twitter'
 gem 'imgur-api'
+gem 'eliza', github: "dpassage/eliza"
 
 gem 'therubyracer'
 gem 'devise'

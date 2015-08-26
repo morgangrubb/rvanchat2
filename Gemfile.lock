@@ -6,6 +6,12 @@ GIT
       eventmachine
       xmpp4r
 
+GIT
+  remote: git://github.com/dpassage/eliza.git
+  revision: 268215ad90a6942cc14eae3f844e1e1382560bdb
+  specs:
+    eliza (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -284,6 +290,7 @@ DEPENDENCIES
   capistrano-rbenv
   coffee-rails (~> 4.1.0)
   devise
+  eliza!
   haml
   hpricot
   imgur-api
