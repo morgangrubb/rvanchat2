@@ -15,9 +15,13 @@ module Bot
     def receive(event, bot_message, params)
       enabled_handlers.each do |name|
         next unless handlers[name]
-        not_yet_processed = !bot_message.processed?
-        handlers[name].receive(event, bot_message, params)
-        $stderr.puts "Handler: #{name} processed:#{not_yet_processed && bot_message.processed?}"
+        begin
+          not_yet_processed = !bot_message.processed?
+          handlers[name].receive(event, bot_message, params)
+          $stderr.puts "Handler: #{name} processed:#{not_yet_processed && bot_message.processed?}"
+        rescue => e
+          $stderr.puts "Handler: #{name} -> #{e.message}"
+        end
       end
     end
 

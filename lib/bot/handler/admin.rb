@@ -18,11 +18,11 @@ module Bot
       end
 
       def public_message(message, params)
-        message.from_admin! if redis.smember("channel_admins", message.user_name)
+        message.from_admin! if redis.sismember("channel_admins", message.user_name)
       end
 
       def private_message(message, params)
-        message.from_admin! if redis.smember("channel_admins", message.user_name)
+        message.from_admin! if redis.sismember("channel_admins", message.user_name)
 
         case message.text
         when /^!auth (.*)$/
@@ -39,7 +39,7 @@ module Bot
       end
 
       def subject_change(message, params)
-        message.from_admin! if redis.smember("channel_admins", message.user_name)
+        message.from_admin! if redis.sismember("channel_admins", message.user_name)
       end
 
     end
