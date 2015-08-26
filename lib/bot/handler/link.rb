@@ -5,6 +5,8 @@ module Bot
 
       DEFAULT_ENCODINGS = %w[ UTF-8 UTF8 utf8 utf-8 ]
 
+      TITLE_MAX_LENGTH = 180
+
       def public_message(message, params)
         return if message.command?
 
