@@ -5,37 +5,18 @@ module Bot
       def private_message(message, params)
         if message.user.admin?
           case message.text
-          when /^!enable (.*)$/
-            enable $1
-            say "Enabling #{$1}", user_name: message.user_name
-          when /^!disable (.*)$/
-            disable $1
-            say "Disabling #{$1}", user_name: message.user_name
+          when /^!(enable|disable) (.*)$/
+            if controller.all_handlers.include?($1)
+              verb = $1 == 'enable' ? 'Enabling' : 'Disabling'
+              say "#{verb} #{$2}", user_name: message.user_name
+              controller.send("#{$1}_handler", $2)
+            else
+              say "I don't recognise the handler #{$1}", user_name: message.user_name
+            end
           when /^!handlers$/
-            say "Handling #{handlers.join(", ")}", user_name: message.user_name
+            say "Enabled: #{controller.enabled_handlers.join(", ")}\nDisabled: #{controller.disabled_handlers.join(", ")}", user_name: message.user_name
           end
         end
-      end
-
-      def handlers
-        redis.smembers("enabled_handlers") - %w(help control)
-      end
-
-      def enabled?
-        true
-      end
-
-      def handler_enabled?(handler)
-        return true if %w(help control)
-        redis.sismember("enabled_handlers", handler)
-      end
-
-      def enable(handler)
-        redis.sadd("enabled_handlers", handler)
-      end
-
-      def disable(handler)
-        redis.srem("enabled_handlers", handler)
       end
 
     end

@@ -6,13 +6,12 @@ module Bot
       end
 
       def process(action, message, params)
-        return unless enabled?
-
         case action
         when :join_room       then join_room(message, params)
         when :leave_room      then leave_room(message, params)
         when :public_message  then public_message(message, params)
         when :private_message then private_message(message, params)
+        when :subject_change  then subject_change(message, params)
         end
       end
 
@@ -29,6 +28,10 @@ module Bot
       end
 
       def private_message(message, params)
+        # Do nothing
+      end
+
+      def subject_change(message, params)
         # Do nothing
       end
 
@@ -54,8 +57,8 @@ module Bot
         $stderr.puts comment
       end
 
-      def enabled?
-        @options[:controller].handler_enabled? self.class.name.underscore.split('_').last
+      def controller
+        @options[:controller]
       end
 
     end

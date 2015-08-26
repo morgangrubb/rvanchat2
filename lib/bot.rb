@@ -6,6 +6,7 @@
 require 'jabbot'
 require 'uri'
 
+require './lib/bot/monkey_patch'
 require './lib/bot/bot'
 require './lib/bot/message'
 require './lib/bot/handler'
@@ -28,51 +29,46 @@ redis_client = Rvanchat.redis(:new, db: 1)
 current_room = Room.where(name: MAIN_ROOM).first
 
 # We use this controller to enable modules.
-controller = Bot::Handler::Control.new(redis: redis_client, room: current_room)
+controller = Bot::HandlerController.new(redis: redis_client, room: current_room)
 
-# Bots run in this order.
-#
-# Multiple handlers can run on a single message. They need to flag the message
-# as handled if they've dealt to it.
-handler_options = {
-  redis: redis_client,
-  room: current_room,
-  controller: controller
-}
+# Register all the handlers we have, in the order in which they're going to
+# process requests. Most specific first.
+[
+  Bot::Handler::Control,
+  Bot::Handler::Record,
+  Bot::Handler::Help,
+  Bot::Handler::Google,
+  Bot::Handler::Facebook,
+  Bot::Handler::Twitter,
+  Bot::Handler::Imgur,
+  Bot::Handler::Giphy,
+  Bot::Handler::Seen,
+  Bot::Handler::Link,
+  Bot::Handler::Eliza
+].each do |handler|
+  controller.register handler
+end
 
-HANDLERS = [
-  controller,
-  Bot::Handler::Record.new(handler_options),
-  Bot::Handler::Help.new(handler_options),
-  Bot::Handler::Google.new(handler_options),
-  Bot::Handler::Facebook.new(handler_options),
-  Bot::Handler::Twitter.new(handler_options),
-  Bot::Handler::Imgur.new(handler_options),
-  Bot::Handler::Giphy.new(handler_options),
-  Bot::Handler::Seen.new(handler_options),
-  Bot::Handler::Link.new(handler_options)
-]
-
-def feed_action_to_handlers(action, message, params)
-  bot_message = Bot::Message.new(message)
-
-  HANDLERS.each do |handler|
-    handler.process(action, bot_message, params)
-  end
+def feed_action_to_controller(event, message, params)
+  controller.receive event, Bot::Message.new(message), params
 end
 
 join do |message, params|
-  feed_action_to_handlers :join_room, message, params
+  feed_action_to_controller :join_room, message, params
 end
 
 leave do |message, params|
-  feed_action_to_handlers :leave_room, message, params
+  feed_action_to_controller :leave_room, message, params
 end
 
 message do |message, params|
-  feed_action_to_handlers :public_message, message, params
+  feed_action_to_controller :public_message, message, params
 end
 
 query do |message, params|
-  feed_action_to_handlers :private_message, message, params
+  feed_action_to_controller :private_message, message, params
+end
+
+subject do |message, params|
+  feed_action_to_controller :subject_change, message, params
 end

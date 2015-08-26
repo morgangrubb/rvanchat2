@@ -11,5 +11,6 @@ module Bot
     autoload :Record,   './lib/bot/handler/record'
     autoload :Seen,     './lib/bot/handler/seen'
     autoload :Twitter,  './lib/bot/handler/twitter'
+    autoload :Eliza,    './lib/bot/handler/eliza'
   end
 end

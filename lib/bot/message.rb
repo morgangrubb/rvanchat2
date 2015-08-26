@@ -3,6 +3,13 @@ module Bot
     def initialize(jabbot_message)
       @jabbot_message = jabbot_message
       @processed = false
+
+      if jabbot_message.is_a?(ExtendedChatMessageNick)
+        $stderr.puts "---------------------------------------------------------"
+        $stderr.puts "Jabber resource"
+        $stderr.puts jabbot_message.jabber_message_resource.inspect
+        $stderr.puts "---------------------------------------------------------"
+      end
     end
 
     def user_name
