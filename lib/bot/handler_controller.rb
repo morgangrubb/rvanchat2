@@ -7,14 +7,17 @@ module Bot
       @handlers = {}
     end
 
-    def register(name, handler)
-      @handlers[name] = handler.new(options.merge(controller: self))
+    def register(handler_class)
+      name = handler_class.name.demodulize.underscore
+      @handlers[name] = handler_class.new(@options.merge(controller: self))
     end
 
     def receive(event, bot_message, params)
       enabled_handlers.each do |name|
         next unless handlers[name]
+        not_yet_processed = !bot_message.processed?
         handlers[name].receive(event, bot_message, params)
+        $stderr.puts "Handler: #{name} processed:#{not_yet_processed && bot_message.processed?}"
       end
     end
 

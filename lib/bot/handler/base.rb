@@ -5,7 +5,7 @@ module Bot
         @options = options
       end
 
-      def process(action, message, params)
+      def receive(action, message, params)
         case action
         when :join_room       then join_room(message, params)
         when :leave_room      then leave_room(message, params)

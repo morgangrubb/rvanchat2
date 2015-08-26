@@ -3,13 +3,7 @@ module Bot
     def initialize(jabbot_message)
       @jabbot_message = jabbot_message
       @processed = false
-
-      if jabbot_message.is_a?(ExtendedChatMessageNick)
-        $stderr.puts "---------------------------------------------------------"
-        $stderr.puts "Jabber resource"
-        $stderr.puts jabbot_message.jabber_message_resource.inspect
-        $stderr.puts "---------------------------------------------------------"
-      end
+      @from_admin = false
     end
 
     def user_name
@@ -38,6 +32,14 @@ module Bot
     def command?
       return @command if defined? @command
       @command = @jabbot_message.text =~ /\A\s*!\w+/
+    end
+
+    def from_admin?
+      @from_admin
+    end
+
+    def from_admin!
+      @from_admin = true
     end
 
     private

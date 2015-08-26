@@ -6,10 +6,11 @@
 require 'jabbot'
 require 'uri'
 
-require './lib/bot/monkey_patch'
 require './lib/bot/bot'
-require './lib/bot/message'
+require './lib/bot/monkey_patch'
+require './lib/bot/handler_controller'
 require './lib/bot/handler'
+require './lib/bot/message'
 
 configure do |conf|
   conf.nick = "@wopr#{Rails.env.development? ? '-dev' : ''}"
@@ -22,18 +23,19 @@ configure do |conf|
   conf.debug = true
 end
 
-# Redis
-redis_client = Rvanchat.redis(:new, db: 1)
-
-# Currently there is no mechanism for determining the room in the message.
-current_room = Room.where(name: MAIN_ROOM).first
-
 # We use this controller to enable modules.
-controller = Bot::HandlerController.new(redis: redis_client, room: current_room)
+def handler_controller
+  return @handler_controller if defined? @handler_controller
+
+  redis_client = Rvanchat.redis(:new, db: 1)
+  current_room = Room.where(name: MAIN_ROOM).first
+  @handler_controller = Bot::HandlerController.new(redis: redis_client, room: current_room)
+end
 
 # Register all the handlers we have, in the order in which they're going to
 # process requests. Most specific first.
 [
+  Bot::Handler::Admin,
   Bot::Handler::Control,
   Bot::Handler::Record,
   Bot::Handler::Help,
@@ -46,29 +48,25 @@ controller = Bot::HandlerController.new(redis: redis_client, room: current_room)
   Bot::Handler::Link,
   Bot::Handler::Eliza
 ].each do |handler|
-  controller.register handler
-end
-
-def feed_action_to_controller(event, message, params)
-  controller.receive event, Bot::Message.new(message), params
+  handler_controller.register handler
 end
 
 join do |message, params|
-  feed_action_to_controller :join_room, message, params
+  handler_controller.receive :join_room, Bot::Message.new(message), params
 end
 
 leave do |message, params|
-  feed_action_to_controller :leave_room, message, params
+  handler_controller.receive :leave_room, Bot::Message.new(message), params
 end
 
 message do |message, params|
-  feed_action_to_controller :public_message, message, params
+  handler_controller.receive :public_message, Bot::Message.new(message), params
 end
 
 query do |message, params|
-  feed_action_to_controller :private_message, message, params
+  handler_controller.receive :private_message, Bot::Message.new(message), params
 end
 
 subject do |message, params|
-  feed_action_to_controller :subject_change, message, params
+  handler_controller.receive :subject_change, Bot::Message.new(message), params
 end

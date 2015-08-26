@@ -1,5 +1,6 @@
 module Bot
   module Handler
+    autoload :Admin,    './lib/bot/handler/admin'
     autoload :Base,     './lib/bot/handler/base'
     autoload :Control,  './lib/bot/handler/control'
     autoload :Facebook, './lib/bot/handler/facebook'
