@@ -20,7 +20,7 @@ module Bot
       private
 
       def say_help(user_name)
-        say "This is where the help message goes", user_name: user_name
+        say "There isn't really a help message yet.", user_name: user_name
       end
     end
   end
