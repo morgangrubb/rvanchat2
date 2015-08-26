@@ -2,6 +2,8 @@ module Bot
   module Handler
     class Seen < Bot::Handler::Base
 
+      # Kinda doesn't work if you change nick and we can't recognise the user
+      # any more. Need to figure out a better solution for that.
       def join_room(message, params)
         user = message.user
 
