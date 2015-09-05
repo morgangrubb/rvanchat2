@@ -14,17 +14,17 @@ module Bot
             image = imgur_client.get_image($1)
             extension_included = $2.present?
 
-            if image && image.link.present?
+            if !extension_included
               include_link =
                 if extension_included
-                  include_link = image.html_link
+                  image.html_link
                 else
-                  include_link = image.link
+                  image.link
                 end
 
               if image.title.present?
                 say "#{include_link}\nimgur.com: #{image.title}\n#{image.description}"
-              else
+              elsif include_link.present?
                 say "imgur.com: #{include_link}"
               end
             end
