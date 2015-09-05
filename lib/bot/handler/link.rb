@@ -1,7 +1,7 @@
 module Bot
   module Handler
     class Link < Bot::Handler::Base
-      BLOCKED_HOSTS = %w[ localhost 127.0.0.1 ]
+      BLOCKED_HOSTS = %w[ localhost 127.0.0.1 en.wikipedia.org en.m.wikipedia.org ]
 
       DEFAULT_ENCODINGS = %w[ UTF-8 UTF8 utf8 utf-8 ]
 
