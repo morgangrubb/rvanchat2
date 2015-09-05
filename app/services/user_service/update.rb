@@ -4,6 +4,7 @@ class UserService::Update < UserService::Base
   before_save :set_rooms
 
   after_save :register_with_prosody
+  after_save :update_vcard
   after_save :publish_prosody_config
   after_save :reload_prosody
 
@@ -16,7 +17,11 @@ class UserService::Update < UserService::Base
   end
 
   def register_with_prosody
-    ProsodyService.register(user) unless options[:skip_prosody]
+    ProsodyService.register(user)
+  end
+
+  def update_vcard
+    VCardUpdaterService.new(user).update
   end
 
   def publish_prosody_config

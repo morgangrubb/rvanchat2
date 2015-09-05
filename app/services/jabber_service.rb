@@ -7,13 +7,16 @@ class JabberService
 
   def initialize(user)
     @user = user
+
+    # This is absolutely needed just to run.
+    Jabber::debug = true
   end
 
   def client
     @client ||=
       begin
         client = Jabber::Client.new(user.jid)
-        client.connect("localhost", 5222)
+        client.connect
         client.auth(user.xmpp_password)
         client
       end
