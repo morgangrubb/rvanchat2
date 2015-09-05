@@ -2,6 +2,14 @@ module Bot
   module Handler
     class Control < Bot::Handler::Base
 
+      def describe_commands(message)
+        if message.from_admin?
+          "!enable <handler>\n!disable <handler>\n!handlers"
+        else
+          nil
+        end
+      end
+
       def private_message(message, params)
         if message.from_admin?
           case message.text

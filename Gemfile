@@ -40,6 +40,7 @@ gem 'unirest'
 gem 'twitter'
 gem 'imgur-api'
 gem 'eliza', github: "dpassage/eliza"
+gem 'giphy'
 
 gem 'therubyracer'
 gem 'devise'

@@ -9,6 +9,11 @@ module Bot
         redis.del("channel_admins")
       end
 
+      # Don't describe admin commands for now
+      def describe_commands(message)
+        nil
+      end
+
       def join_room(message, params)
         # Do nothing
       end

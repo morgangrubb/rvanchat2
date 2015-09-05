@@ -5,6 +5,10 @@ module Bot
         @options = options
       end
 
+      def describe_commands(message)
+        nil
+      end
+
       def receive(action, message, params)
         case action
         when :join_room       then join_room(message, params)
