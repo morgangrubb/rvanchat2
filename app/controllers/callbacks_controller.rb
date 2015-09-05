@@ -24,6 +24,9 @@ class CallbacksController < ApplicationController
     # Push the avatar (Just in case any clients support it)
     # AvatarUpdaterService.new(user).update
 
+    # Set rooms, groups, etc.
+    UserService.update(user).save
+
     # We're done here
     sign_in_and_redirect user
   end

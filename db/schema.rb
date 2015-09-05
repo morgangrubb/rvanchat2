@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824044722) do
+ActiveRecord::Schema.define(version: 20150905175007) do
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer  "group_id",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "group_users", ["group_id"], name: "index_group_users_on_group_id", using: :btree
+  add_index "group_users", ["user_id"], name: "index_group_users_on_user_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "default",    limit: 1,   default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
 
   create_table "links", force: :cascade do |t|
     t.integer  "message_id", limit: 4,     null: false
@@ -74,6 +91,7 @@ ActiveRecord::Schema.define(version: 20150824044722) do
     t.boolean  "admin",                  limit: 1,     default: false, null: false
     t.string   "image_url",              limit: 255
     t.text     "auth_info",              limit: 65535
+    t.string   "admin_token",            limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
