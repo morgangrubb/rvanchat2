@@ -8,7 +8,7 @@ module Bot
           say_image Giphy.random
         elsif message.text =~ /^!giphy (.+)$/
           message.processed!
-          say_image Giphy.search($1, limit: 50).sample
+          say_image Giphy.search($1).sample
         end
       end
 
@@ -26,8 +26,8 @@ module Bot
 
       private
 
-      def say_image(giphy, include_url: false)
-        if include_url
+      def say_image(giphy)
+        if false
           say "#{giphy.image_url.to_s}\n#{giphy.url.to_s}"
         else
           say "#{giphy.image_url.to_s}"
