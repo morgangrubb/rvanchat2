@@ -5,7 +5,6 @@ module Bot
       def public_message(message, params)
         if message.text =~ /^!giphy$/
           message.processed!
-          say_help message.user_name
           say_image Giphy.random
         elsif message.text =~ /^!giphy (.+)$/
           message.processed!
@@ -14,12 +13,6 @@ module Bot
       end
 
       def describe_commands(message)
-        "Find a random gif with\n!giphy\nor search for a specific gif with\n!giphy <search term>"
-      end
-
-      private
-
-      def say_help(user_name)
         examples = [
           "all the things",
           "KAHN",
@@ -27,14 +20,17 @@ module Bot
           "very good puppy dog",
           "omfg"
         ]
-        say "The command is:\n!giphy searchterm\nFor example:\n!giphy #{examples.sample}", user_name: user_name
+
+        "Find a random gif with\n!giphy\nor search for a specific gif with\n!giphy #{examples.sample}"
       end
+
+      private
 
       def say_image(giphy, include_url: false)
         if include_url
-          say "#{giphy.fixed_height_downsampled_url}\n#{giphy.url}"
+          say "#{giphy.image_url.to_s}\n#{giphy.url.to_s}"
         else
-          say "#{giphy.fixed_height_downsampled_url}"
+          say "#{giphy.image_url.to_s}"
         end
       end
 
