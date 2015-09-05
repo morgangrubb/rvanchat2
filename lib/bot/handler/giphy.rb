@@ -5,10 +5,10 @@ module Bot
       def public_message(message, params)
         if message.text =~ /^!giphy$/
           message.processed!
-          say_image Giphy.random
+          say_image ::Giphy.random
         elsif message.text =~ /^!giphy (.+)$/
           message.processed!
-          say_image Giphy.search($1).sample
+          say_image ::Giphy.search($1).sample
         end
       end
 
