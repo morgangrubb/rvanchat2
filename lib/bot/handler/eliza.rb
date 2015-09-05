@@ -1,4 +1,8 @@
 require "eliza"
+require 'eliza/key'
+require 'eliza/memory'
+require 'eliza/script'
+require 'eliza/interpreter'
 
 module Bot
   module Handler
@@ -26,7 +30,7 @@ module Bot
       private
 
       def chat_for(user_name)
-        @chats[user_name] ||= Eliza::Interpreter.new('/scripts/original.txt')
+        @chats[user_name] ||= ::Eliza::Interpreter.new('/scripts/original.txt')
       end
 
       def end_chat_for(user_name)
