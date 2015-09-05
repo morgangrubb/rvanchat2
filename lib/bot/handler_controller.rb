@@ -21,6 +21,7 @@ module Bot
           $stderr.puts "Handler: #{name} processed:#{not_yet_processed && bot_message.processed?}"
         rescue => e
           $stderr.puts "Handler: #{name} -> #{e.message}"
+          $stderr.puts "  " + e.backtrace.join("\n  ")
         end
       end
     end

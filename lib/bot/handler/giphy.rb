@@ -8,7 +8,7 @@ module Bot
           say_image ::Giphy.random
         elsif message.text =~ /^!giphy (.+)$/
           message.processed!
-          say_image ::Giphy.search($1).sample
+          say_image ::Giphy.random($1)
         end
       end
 
@@ -30,7 +30,7 @@ module Bot
         if false
           say "#{giphy.image_url.to_s}\n#{giphy.url.to_s}"
         else
-          say "#{giphy.image_url.to_s}"
+          say giphy.image_url.to_s
         end
       end
 

@@ -6,12 +6,6 @@
 require 'jabbot'
 require 'uri'
 
-require './lib/bot/bot'
-require './lib/bot/monkey_patch'
-require './lib/bot/handler_controller'
-require './lib/bot/handler'
-require './lib/bot/message'
-
 configure do |conf|
   conf.nick = "@wopr#{Rails.env.development? ? '-dev' : ''}"
   conf.login = "bot@#{XMPP_HOST}"
@@ -22,6 +16,12 @@ configure do |conf|
   # conf.log_file = "/home/ubuntu/rvanchat/current/log/bot.log"
   conf.debug = true
 end
+
+require './lib/bot/bot'
+require './lib/bot/monkey_patch'
+require './lib/bot/handler_controller'
+require './lib/bot/handler'
+require './lib/bot/message'
 
 # We use this controller to enable modules.
 def handler_controller
@@ -63,10 +63,18 @@ message do |message, params|
   handler_controller.receive :public_message, Bot::Message.new(message), params
 end
 
-query do |message, params|
+private_message do |message, params|
   handler_controller.receive :private_message, Bot::Message.new(message), params
 end
 
 subject do |message, params|
   handler_controller.receive :subject_change, Bot::Message.new(message), params
+end
+
+# Dirty horrible hack to remove the annoying kernel method that breaks Faraday.
+#
+# TODO: Remove the other methods?
+module Jabbot::Macros
+  alias :jabbot_query :query
+  remove_method :query
 end
