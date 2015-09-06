@@ -13,3 +13,19 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree ./chat
+
+// Load background images from the server periodically.
+function startBackgrounds() {
+  swapBackground = function() {
+
+    // Fetch the next image
+    $.ajax("/background", {
+      success: function(data, textStatus, jqXHR) {
+        $('body').css("background-image", "url(" + data.url + ")").addClass('cover');
+        setTimeout(swapBackground, 1000 * 60 * 5)
+      }
+    })
+  }
+
+  swapBackground()
+}

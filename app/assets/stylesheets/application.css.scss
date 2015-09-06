@@ -16,9 +16,15 @@
 html, body { height: 100%; }
 
 body {
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: image-url('footer_lodyas.png');
+  background-repeat: repeat;
   background-position: center center;
+  background-color: #000000;
+}
+
+body.cover {
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 h3.android {

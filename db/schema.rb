@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150905175007) do
+ActiveRecord::Schema.define(version: 20150906164017) do
+
+  create_table "backgrounds", force: :cascade do |t|
+    t.string   "url",        limit: 255
+    t.string   "credit",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "group_users", force: :cascade do |t|
     t.integer  "group_id",   limit: 4

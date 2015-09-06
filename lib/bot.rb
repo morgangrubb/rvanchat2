@@ -37,6 +37,7 @@ end
 [
   Bot::Handler::Admin,
   Bot::Handler::Control,
+  Bot::Handler::Background,
   Bot::Handler::Record,
   Bot::Handler::Help,
   Bot::Handler::Google,
