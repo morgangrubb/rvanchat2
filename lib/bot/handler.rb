@@ -13,5 +13,6 @@ module Bot
     autoload :Seen,     './lib/bot/handler/seen'
     autoload :Twitter,  './lib/bot/handler/twitter'
     autoload :Eliza,    './lib/bot/handler/eliza'
+    autoload :Youtube,  './lib/bot/handler/youtube'
   end
 end
