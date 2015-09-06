@@ -291,6 +291,8 @@ GEM
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
     xmpp4r (0.5.6)
+    yt (0.25.6)
+      activesupport
 
 PLATFORMS
   ruby
@@ -332,3 +334,4 @@ DEPENDENCIES
   unirest
   web-console (~> 2.0)
   xmpp4r
+  yt (~> 0.25.5)

@@ -42,6 +42,7 @@ end
   Bot::Handler::Google,
   Bot::Handler::Facebook,
   Bot::Handler::Twitter,
+  Bot::Handler::Youtube,
   Bot::Handler::Imgur,
   Bot::Handler::Giphy,
   Bot::Handler::Seen,

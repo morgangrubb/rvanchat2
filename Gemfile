@@ -41,6 +41,7 @@ gem 'twitter'
 gem 'imgur-api'
 gem 'eliza', github: "dpassage/eliza"
 gem 'giphy'
+gem 'yt', '~> 0.25.5'
 
 gem 'therubyracer'
 gem 'devise'
