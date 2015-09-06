@@ -21,7 +21,11 @@ class UserService::Update < UserService::Base
   end
 
   def update_vcard
-    VCardUpdaterService.new(user).update
+    begin
+      VCardUpdaterService.new(user).update
+    rescue => e
+      Rails.logger.fatal "#{e.message}\n  #{e.backtrace[0..10].join("\n  ")}"
+    end
   end
 
   def publish_prosody_config
