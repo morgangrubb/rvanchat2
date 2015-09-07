@@ -32,13 +32,15 @@ module Bot
       end
 
       def describe_commands(message)
-        [
-          "Manage backgrounds with:",
-          "!background list",
-          "!background add <url> <credit>",
-          "!background remove <id>",
-          "Backgrounds should be under 100kb for sanity"
-        ].join("\n")
+        if message.from_admin?
+          [
+            "Manage backgrounds with:",
+            "!background list",
+            "!background add <url> <credit>",
+            "!background remove <id>",
+            "Backgrounds should be under 100kb for sanity"
+          ].join("\n")
+        end
       end
 
     end
