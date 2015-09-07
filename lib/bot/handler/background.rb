@@ -16,7 +16,7 @@ module Bot
             when /^add ([^\s]+)(?:\s(.*))?$/
               if message.links.any?
                 message.links.first.processed!
-                ::Background.create(url: message.links.first.to_s, credit: $2).create!
+                ::Background.create(url: message.links.first.parsed.to_s, credit: $2).create!
                 say_background background, message.user_name
               end
             when /^remove ([0-9]+)/
