@@ -69,6 +69,10 @@ module Bot
         end
       end
 
+      def describe_commands(message)
+        "A link log is located at http://#{XMPP_HOST}/links"
+      end
+
       private
 
       # example taken from
