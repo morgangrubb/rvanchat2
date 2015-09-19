@@ -22,7 +22,7 @@ function startBackgrounds() {
     $.ajax("/background", {
       success: function(data, textStatus, jqXHR) {
         $('body').css("background-image", "url(" + data.url + ")").addClass('cover');
-        setTimeout(swapBackground, 1000 * 60 * 5)
+        setTimeout(swapBackground, 1000 * 60 * 60)
       }
     })
   }
