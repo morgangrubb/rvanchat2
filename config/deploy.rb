@@ -35,6 +35,15 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'prosody')
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+namespace :prosody do
+  task :update_modules do
+    on roles(:web) do
+      execute "cd /opt/prosody-modules && sudo hg pull --update"
+      execute "sudo prosodyctl reload"
+    end
+  end
+end
+
 namespace :deploy do
 
   after :restart, :clear_cache do
