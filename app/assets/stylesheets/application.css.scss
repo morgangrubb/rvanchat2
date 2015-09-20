@@ -35,6 +35,12 @@ h3.android {
   background-color: rgba(68, 68, 68, 0.5);
   padding: 10px;
   border-radius: 10px;
+
+  h2 {
+    margin-top: 0;
+    color: white;
+    text-align: center;
+  }
 }
 
 a.google {

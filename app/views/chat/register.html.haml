@@ -6,6 +6,7 @@
       .alert.alert-danger= alert
 
     .register-container
+      %h2 Sign in with
       = link_to user_omniauth_authorize_path(:google_oauth2), class: "btn btn-default btn-lg google btn-block" do
         %i.fa.fa-google.fa-lg
         Google
