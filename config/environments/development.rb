@@ -1,5 +1,5 @@
-XMPP_HOST = "lvh.me"
-CONFERENCE_HOST = "conference.#{XMPP_HOST}"
+XMPP_HOST = "chat.lvh.me"
+CONFERENCE_HOST = "conference.lvh.me"
 MAIN_ROOM = "main"
 
 Rails.application.configure do
