@@ -12,6 +12,15 @@ module Bot
         end
       end
 
+      def describe_commands(message)
+        if message.from_admin?
+          [
+            "Echo text to the chat room:",
+            "!say I'm sorry Dave, I can't do that.",
+          ].join("\n")
+        end
+      end
+
     end
   end
 end
