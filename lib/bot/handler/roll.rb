@@ -3,7 +3,7 @@ module Bot
 
     class Roll < Bot::Handler::Base
 
-      def private_message(message, params)
+      def public_message(message, params)
         case message.text
         when /^!roll (.*)$/
           message.processed!
