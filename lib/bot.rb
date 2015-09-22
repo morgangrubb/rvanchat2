@@ -47,6 +47,7 @@ end
   Bot::Handler::Youtube,
   Bot::Handler::Imgur,
   Bot::Handler::Giphy,
+  Bot::Handler::EightBall,
   Bot::Handler::Seen,
   Bot::Handler::Link,
   Bot::Handler::Eliza

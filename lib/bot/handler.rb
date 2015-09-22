@@ -16,5 +16,6 @@ module Bot
     autoload :Youtube,    './lib/bot/handler/youtube'
     autoload :Background, './lib/bot/handler/background'
     autoload :Say,        './lib/bot/handler/say'
+    autoload :EightBall,  './lib/bot/handler/eight_ball'
   end
 end
