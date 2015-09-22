@@ -17,5 +17,6 @@ module Bot
     autoload :Background, './lib/bot/handler/background'
     autoload :Say,        './lib/bot/handler/say'
     autoload :EightBall,  './lib/bot/handler/eight_ball'
+    autoload :Roll,       './lib/bot/handler/roll'
   end
 end

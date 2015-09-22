@@ -48,6 +48,7 @@ end
   Bot::Handler::Imgur,
   Bot::Handler::Giphy,
   Bot::Handler::EightBall,
+  Bot::Handler::Roll,
   Bot::Handler::Seen,
   Bot::Handler::Link,
   Bot::Handler::Eliza
