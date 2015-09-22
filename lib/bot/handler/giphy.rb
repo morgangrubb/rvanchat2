@@ -27,29 +27,12 @@ module Bot
       private
 
       def say_image(giphy, message)
-        # Insert this image into the link log with the command that was issued.
-        stored_message =
-          ::Message.create(
-            user_name: "@wopr",
-            user_id: nil,
-            room_name: @options[:room].name,
-            room_id: @options[:room].id,
-            text: "#{message.user_name}: #{message.text}\n=> #{giphy.image_url.to_s}"
-          )
-
-        # Stash the link
-        uri = URI.parse(giphy.image_url.to_s)
-
-        ::Link.create(
-          message_id: stored_message.id,
-          host: uri.host,
-          url: giphy.image_url.to_s
-        )
+        text = "#{message.user_name}: #{message.text}\n=> #{giphy.image_url.to_s}"
 
         if false
-          say "#{giphy.image_url.to_s}\n#{giphy.url.to_s}"
+          say "#{giphy.image_url.to_s}\n#{giphy.url.to_s}", record: text
         else
-          say giphy.image_url.to_s
+          say giphy.image_url.to_s, record: text
         end
       end
 

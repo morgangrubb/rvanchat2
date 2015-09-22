@@ -15,5 +15,6 @@ module Bot
     autoload :Eliza,      './lib/bot/handler/eliza'
     autoload :Youtube,    './lib/bot/handler/youtube'
     autoload :Background, './lib/bot/handler/background'
+    autoload :Say,        './lib/bot/handler/say'
   end
 end

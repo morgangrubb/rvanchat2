@@ -40,10 +40,42 @@ module Bot
       end
 
       def say(message, options = {})
+        options.reverse_merge! record: false
+
         if options[:user_name]
           post message => options[:user_name]
         else
           post message
+        end
+
+        if options[:record]
+          text =
+            if options[:record] === true
+              message
+            else
+              options[:record]
+            end
+
+          # Insert this image into the link log with the command that was issued.
+          stored_message =
+            ::Message.create(
+              user_name: "@wopr",
+              user_id: nil,
+              room_name: @options[:room].name,
+              room_id: @options[:room].id,
+              text: text
+            )
+
+          # And fetch any links in the recorded message
+          links = URI.extract(text).collect { |url| Link.new(url) }
+          links.each do |link|
+            ::Link.create(
+              message_id: stored_message.id,
+              host: link.parsed.host,
+              url: link.parsed.to_s
+            )
+          end
+
         end
       end
 

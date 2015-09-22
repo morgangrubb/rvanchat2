@@ -36,6 +36,7 @@ end
 # process requests. Most specific first.
 [
   Bot::Handler::Admin,
+  Bot::Handler::Say,
   Bot::Handler::Control,
   Bot::Handler::Background,
   Bot::Handler::Record,
