@@ -15,9 +15,9 @@ module Bot
       def private_message(message, params)
         if message.from_admin?
           case message.text
-          when /^!whois (.*)/
+          when /^!whois (.*)$/
             xmpp_username = $1
-            user = User.where(xmpp_username).first
+            user = User.where(xmpp_username: xmpp_username).first
             if user
               pieces =
                 [
@@ -38,7 +38,7 @@ module Bot
             else
               say "I couldn't find anyone by the name '#{xmpp_username}'", user_name: message.user_name
             end
-          when /^!whois/
+          when /^!whois$/
             say describe_commands(message), user_name: message.user_name
           end
         end
