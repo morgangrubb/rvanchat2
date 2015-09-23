@@ -18,5 +18,6 @@ module Bot
     autoload :Say,        './lib/bot/handler/say'
     autoload :EightBall,  './lib/bot/handler/eight_ball'
     autoload :Roll,       './lib/bot/handler/roll'
+    autoload :Whois,      './lib/bot/handler/whois'
   end
 end
