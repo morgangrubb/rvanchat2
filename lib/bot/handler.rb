@@ -20,5 +20,6 @@ module Bot
     autoload :Roll,       './lib/bot/handler/roll'
     autoload :Whois,      './lib/bot/handler/whois'
     # autoload :Zork,       './lib/bot/handler/zork'
+    autoload :Coin,       './lib/bot/handler/coin'
   end
 end

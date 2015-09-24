@@ -51,6 +51,7 @@ end
   # Bot::Handler::Zork,
   Bot::Handler::EightBall,
   Bot::Handler::Roll,
+  Bot::Handler::Coin,
   Bot::Handler::Seen,
   Bot::Handler::Link,
   Bot::Handler::Eliza
