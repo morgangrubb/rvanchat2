@@ -55,6 +55,7 @@ GEM
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bit-struct (0.15.0)
     bootstrap-kaminari-views (0.0.5)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -117,6 +118,8 @@ GEM
       launchy (~> 2.4)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
+    gruesome (0.0.6)
+      bit-struct
     haml (4.0.6)
       tilt
     hashie (3.4.0)
@@ -308,6 +311,7 @@ DEPENDENCIES
   devise
   eliza!
   giphy
+  gruesome
   haml
   hpricot
   imgur-api
@@ -335,3 +339,6 @@ DEPENDENCIES
   web-console (~> 2.0)
   xmpp4r
   yt (~> 0.25.5)
+
+BUNDLED WITH
+   1.10.6

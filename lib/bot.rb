@@ -48,6 +48,7 @@ end
   Bot::Handler::Youtube,
   Bot::Handler::Imgur,
   Bot::Handler::Giphy,
+  # Bot::Handler::Zork,
   Bot::Handler::EightBall,
   Bot::Handler::Roll,
   Bot::Handler::Seen,

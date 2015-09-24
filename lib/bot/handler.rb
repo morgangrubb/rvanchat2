@@ -19,5 +19,6 @@ module Bot
     autoload :EightBall,  './lib/bot/handler/eight_ball'
     autoload :Roll,       './lib/bot/handler/roll'
     autoload :Whois,      './lib/bot/handler/whois'
+    # autoload :Zork,       './lib/bot/handler/zork'
   end
 end
