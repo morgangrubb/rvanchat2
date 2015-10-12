@@ -7,7 +7,7 @@ module Bot
         when /^!(coin|cointoss|coinflip|flipcoin|flip)(\s+.*)?$/
           message.processed!
           say "You get #{flip_coin}.", user_name: message.user_name
-        when /^!(tails|heads)$/
+        when /^!(tails|heads)(\s+.*)?$/
           message.processed!
           toss = flip_coin
           if toss == $1
@@ -23,7 +23,7 @@ module Bot
         when /^!(coin|cointoss|coinflip|flipcoin|flip)(\s+.*)?$/
           message.processed!
           say "#{message.user_name} gets #{flip_coin}."
-        when /^!(tails|heads)$/
+        when /^!(tails|heads)(\s+.*)?$/
           message.processed!
           toss = flip_coin
           if toss == $1
