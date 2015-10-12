@@ -41,7 +41,7 @@ module Bot
         elsif message.text =~ /^!8ball (.+)$/
           message.processed!
           response = EightBallResponse.offset(rand(EightBallResponse.count)).first
-          say response.text if response
+          say "8ball says: #{response.text}" if response
         end
       end
 
