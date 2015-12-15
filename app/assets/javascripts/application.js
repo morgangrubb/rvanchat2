@@ -14,18 +14,25 @@
 //= require jquery_ujs
 //= require_tree ./chat
 
+function swapBackground() {
+  // Fetch the next image
+  $.ajax("/background", {
+    success: function(data, textStatus, jqXHR) {
+      $('body').css("background-image", "url(" + data.url + ")").addClass('cover');
+    }
+  })
+}
+
+$('#swap-background').click(function(event) {
+  swapBackground();
+  event.preventDefault();
+})
+
 // Load background images from the server periodically.
 function startBackgrounds() {
-  swapBackground = function() {
-
-    // Fetch the next image
-    $.ajax("/background", {
-      success: function(data, textStatus, jqXHR) {
-        $('body').css("background-image", "url(" + data.url + ")").addClass('cover');
-        setTimeout(swapBackground, 1000 * 60 * 60)
-      }
-    })
+  swapBackgroundOnTimer = function() {
+    swapBackground()
+    setTimeout(swapBackgroundOnTimer, 1000 * 60 * 60)
   }
-
-  swapBackground()
+  swapBackgroundOnTimer()
 }
