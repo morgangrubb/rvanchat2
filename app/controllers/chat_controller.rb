@@ -36,7 +36,7 @@ class ChatController < ApplicationController
     # @credentials =
     #   Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
 
-    instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password)
+    instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password, bosh_url: "http://#{XMPP_HOST}/http-bind/")
     @credentials = {
       sid: instance.sid,
       jid: instance.jabber_id,
