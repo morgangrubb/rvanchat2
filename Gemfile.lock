@@ -59,9 +59,6 @@ GEM
     bootstrap-kaminari-views (0.0.5)
       kaminari (>= 0.13)
       rails (>= 3.1)
-    bosh4r (0.0.6)
-      builder (>= 3.0.0)
-      rest-client (>= 1.6.7)
     buftok (0.2.0)
     builder (3.2.2)
     byebug (3.5.1)
@@ -306,7 +303,6 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap-kaminari-views
-  bosh4r
   byebug
   capistrano-passenger
   capistrano-rails

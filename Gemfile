@@ -35,8 +35,6 @@ gem 'thin'
 
 gem 'redis'
 
-gem 'bosh4r'
-
 gem 'jabbot', require: nil, github: 'badboy/jabbot'
 gem 'unirest'
 gem 'twitter'
