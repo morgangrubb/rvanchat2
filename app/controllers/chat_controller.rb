@@ -33,25 +33,28 @@ class ChatController < ApplicationController
   end
 
   def candy
-    if current_user.id == 3
-      if params[:bosh4r]
-        instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password, bosh_url: "http://#{XMPP_HOST}/http-bind/")
-        @credentials = {
-          sid: instance.sid,
-          jid: instance.jabber_id,
-          rid: instance.rid
-        }
-      else
-        @credentials =
-          Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
-      end
+    # if current_user.id == 3
+    #   if params[:bosh4r]
+    #     instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password, bosh_url: "http://#{XMPP_HOST}/http-bind/")
+    #     @credentials = {
+    #       sid: instance.sid,
+    #       jid: instance.jabber_id,
+    #       rid: instance.rid
+    #     }
+    #   else
+    #     @credentials =
+    #       Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+    #   end
 
-      render layout: "empty"
-    else
-      render text: "<p><b>Currently broken. :(</b><br />Please use a chat client and the credentials available in the upper-right corner of the window.</p>".html_safe
-    end
+    #   render layout: "empty"
+    # else
+    #   render text: "<p><b>Currently broken. :(</b><br />Please use a chat client and the credentials available in the upper-right corner of the window.</p>".html_safe
+    # end
 
-    # render layout: "empty"
+    @credentials =
+      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+
+    render layout: "empty"
   end
 
   def register

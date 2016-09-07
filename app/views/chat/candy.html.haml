@@ -139,7 +139,7 @@
       // Send the user to the login page if we've been logged out
       $(Candy).on('candy:core.login', function(event, data) {
         updateUnreadMessageCount(-1);
-        // top.location.replace('#{root_url}')
+        top.location.replace('#{root_url}')
       });
 
       // Now bookmark the default rooms
