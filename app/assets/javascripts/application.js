@@ -28,6 +28,12 @@ $('#swap-background').click(function(event) {
   event.preventDefault();
 })
 
+$('#swap-background').hover(function() {
+  $('#candyContainer').addClass('transparent');
+}, function() {
+  $('#candyContainer').removeClass('transparent');
+})
+
 // Load background images from the server periodically.
 function startBackgrounds() {
   swapBackgroundOnTimer = function() {
@@ -36,3 +42,4 @@ function startBackgrounds() {
   }
   swapBackgroundOnTimer()
 }
+

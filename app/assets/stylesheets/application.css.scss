@@ -66,7 +66,17 @@ a.facebook:hover, a.facebook:focus {
   border: none;
 }
 
-
+#candyContainer {
+  opacity: 1;
+  -webkit-transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .15s ease-in-out;
+  -ms-transition: opacity .15s ease-in-out;
+  -o-transition: opacity .15s ease-in-out;
+  transition: opacity .15s ease-in-out;
+  &.transparent {
+    opacity: 0.1
+  }
+}
 
 .links {
   background-color: rgba(255, 255, 255, 0.8);
