@@ -65,17 +65,24 @@ class Dropbox
   end
 
   def get_shared_link_data(path)
-    Rvanchat.fetch "dropbox/data/#{cache_key}/#{path}", expires_in: 1.week do
-      Unirest.post('https://content.dropboxapi.com/2/sharing/get_shared_link_file', {
-        headers: {
-          "Authorization" => "Bearer #{access_token}",
-          "Content-Type" => "",
-          "Dropbox-API-Arg" => {
-            url: shared_folder,
-            path: path
-          }.to_json
-        }
-      })
+    Rvanchat.fetch "dropbox/data/#{cache_key}/#{path}/2", expires_in: 1.week do
+      response =
+        Unirest.post('https://content.dropboxapi.com/2/sharing/get_shared_link_file', {
+          headers: {
+            "Authorization" => "Bearer #{access_token}",
+            "Content-Type" => "",
+            "Dropbox-API-Arg" => {
+              url: shared_folder,
+              path: path
+            }.to_json
+          }
+        })
+
+      if response.status == 200
+        response.raw_body
+      else
+        raise response.raw_body
+      end
     end
   end
 
