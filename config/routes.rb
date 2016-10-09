@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'prebind' => 'chat#prebind'
   get 'links' => 'links#index'
   get 'background' => 'backgrounds#random'
+  get 'dropbox' => 'backgrounds#dropbox'
 
   # You can have the root of your site routed with "root"
   root 'chat#index'
