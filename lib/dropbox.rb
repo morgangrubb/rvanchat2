@@ -78,7 +78,7 @@ class Dropbox
           }
         })
 
-      if response.status == 200
+      if response.code == 200
         response.raw_body
       else
         raise response.raw_body
