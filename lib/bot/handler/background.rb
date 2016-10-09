@@ -27,23 +27,23 @@ module Bot
             when /^source (dropbox|urls)\s*$/
               if $1 == 'dropbox'
                 Dropbox.enabled!
-                say "Dropbox backgrounds enabled."
+                say "Dropbox backgrounds enabled.", user_name: message.user_name
               else
                 Dropbox.disabled!
-                say "Dropbox backgrounds disabled."
+                say "Dropbox backgrounds disabled.", user_name: message.user_name
               end
             when /^dropbox\s*$/
-              say "The current shared folder url is: #{Dropbox.shared_folder}"
+              say "The current shared folder url is: #{Dropbox.shared_folder}", user_name: message.user_name
             when /^dropbox\s+list\s*$/
               begin
                 files = Dropbox.new.files
-                say "I found the following files in the shared dropbox folder:\n#{files.join("\n")}"
+                say "I found the following files in the shared dropbox folder:\n#{files.join("\n")}", user_name: message.user_name
               rescue => e
-                say "There was a problem reading files from the shared folder."
+                say "There was a problem reading files from the shared folder.", user_name: message.user_name
               end
             when %r(^dropbox\s+(https?://.*?)\s*$)
               Dropbox.shared_folder = $1
-              say "Shared folder updated. No sanity check performed so I hope you got it right."
+              say "Shared folder updated. No sanity check performed so I hope you got it right.", user_name: message.user_name
             end
           end
         end
