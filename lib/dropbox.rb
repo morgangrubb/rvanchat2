@@ -83,7 +83,11 @@ class Dropbox
     get_shared_link_data(path)
   end
 
+  def get_random_image
+    images.sample
+  end
+
   def get_random_image_data
-    get_image_data(images.sample)
+    get_image_data(get_random_image)
   end
 end

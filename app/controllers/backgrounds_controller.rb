@@ -5,7 +5,7 @@ class BackgroundsController < ApplicationController
     if Dropbox.enabled?
       client = Dropbox.new
       render json: {
-        url: "/dropbox?" + { path: client.get_random_file }.to_query,
+        url: "/dropbox?" + { path: client.get_random_image }.to_query,
         credit: 'Chris Cruthers'
       }
     else
