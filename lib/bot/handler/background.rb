@@ -41,7 +41,7 @@ module Bot
               rescue => e
                 say "There was a problem reading files from the shared folder."
               end
-            when /^dropbox\s+(https?://.*?)\s*$/
+            when %r(^dropbox\s+(https?://.*?)\s*$)
               Dropbox.shared_folder = $1
               say "Shared folder updated. No sanity check performed so I hope you got it right."
             end
@@ -62,7 +62,7 @@ module Bot
             "!background remove <id>",
             "",
             "Experimental:",
-            "!background source [dropbox|urls]"
+            "!background source [dropbox|urls]",
             "!background dropbox",
             "!background dropbox list",
             "!background dropbox <url for shared folder>",
