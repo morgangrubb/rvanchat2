@@ -29,9 +29,9 @@ $('#swap-background').click(function(event) {
 })
 
 $('#swap-background').hover(function() {
-  $('#candyContainer').addClass('transparent');
+  $('.container').addClass('transparent');
 }, function() {
-  $('#candyContainer').removeClass('transparent');
+  $('.container').removeClass('transparent');
 })
 
 // Load background images from the server periodically.
