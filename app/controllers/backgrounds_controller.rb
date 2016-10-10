@@ -1,13 +1,19 @@
 require 'dropbox'
 
 class BackgroundsController < ApplicationController
+  def gallery
+    if Dropbox.enabled?
+      client = Dropbox.new
+      @images = client.images
+    else
+      @images = Background.all
+    end
+  end
+
   def random
     if Dropbox.enabled?
       client = Dropbox.new
-      render json: {
-        url: "/dropbox?" + { path: client.get_random_image }.to_query,
-        credit: 'Chris Cruthers'
-      }
+      render json: client.images.sample
     else
       count = Background.count
       if count.zero?

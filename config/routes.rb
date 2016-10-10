@@ -15,6 +15,12 @@ Rails.application.routes.draw do
   get 'background' => 'backgrounds#random'
   get 'dropbox' => 'backgrounds#dropbox'
 
+  resources :backgrounds, only: [] do
+    collection do
+      get :gallery
+    end
+  end
+
   # You can have the root of your site routed with "root"
   root 'chat#index'
 

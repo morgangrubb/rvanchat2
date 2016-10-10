@@ -1,0 +1,6 @@
+.gallery
+  - @images.each do |image|
+    .image
+      = image_tag(image.url, alt: image.credit)
+      %span
+        = image.credit

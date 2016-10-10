@@ -34,6 +34,11 @@ module Bot
               end
             when /^dropbox\s*$/
               say "The current shared folder url is: #{Dropbox.shared_folder}", user_name: message.user_name
+            when /^dropbox\s+credit\s*$/
+              say "The current shared folder credit is: #{Dropbox.credit}", user_name: message.user_name
+            when /^dropbox\s+credit\s+(.+?)\s*$/
+              Dropbox.credit = $1
+              say "Shared folder credit updated.", user_name: message.user_name
             when /^dropbox\s+list\s*$/
               begin
                 files = Dropbox.new.files
@@ -53,6 +58,14 @@ module Bot
         say "#{background.id} - #{background.credit}\n#{background.url}", user_name: user_name
       end
 
+      def public_message(message, params)
+        case message.text
+        when /^!backgrounds\s*$/
+          message.processed!
+          say "See all the backgrounds at http://#{XMPP_HOST}/backgrounds/gallery"
+        end
+      end
+
       def describe_commands(message)
         if message.from_admin?
           [
@@ -65,9 +78,16 @@ module Bot
             "!background source [dropbox|urls]",
             "!background dropbox",
             "!background dropbox list",
+            "!background dropbox credit",
+            "!background dropbox credit <name for credit>",
             "!background dropbox <url for shared folder>",
             "",
             "Backgrounds should be under 100kb for sanity"
+          ].join("\n")
+        else
+          [
+            "See all the backgrounds:",
+            "!backgrounds",
           ].join("\n")
         end
       end
