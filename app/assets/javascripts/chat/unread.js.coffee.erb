@@ -212,7 +212,9 @@ class FaviconRenderer
 #     true
 
 $ ->
-  if document.createElement('canvas').getContext
+  isIE = navigator.appName is 'Microsoft Internet Explorer'
+
+  if document.createElement('canvas').getContext and not isIE
     handler = new UnreadFaviconAnimator(FaviconRenderer)
   else
     handler = new UnreadTitleHandler()
