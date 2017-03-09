@@ -72,12 +72,12 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
-    capistrano-bundler (1.1.4)
+    capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
     capistrano-passenger (0.0.2)
       capistrano (~> 3.0)
-    capistrano-rails (1.1.2)
+    capistrano-rails (1.1.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rbenv (2.0.3)
@@ -90,7 +90,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
-    colorize (0.7.5)
     columnize (0.9.0)
     concurrent-ruby (1.0.5)
     daemons (1.1.9)
@@ -170,7 +169,7 @@ GEM
     naught (1.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
+    net-ssh (4.1.0)
     netrc (0.7.9)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
@@ -253,8 +252,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sshkit (1.7.1)
-      colorize (>= 0.7.0)
+    sshkit (1.12.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     therubyracer (0.12.1)
@@ -308,8 +306,9 @@ DEPENDENCIES
   bootstrap-kaminari-views
   bosh4r
   byebug
+  capistrano (= 3.4.0)
   capistrano-passenger
-  capistrano-rails
+  capistrano-rails (= 1.1.3)
   capistrano-rbenv
   coffee-rails (~> 4.1.0)
   devise
