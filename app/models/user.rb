@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
         # Allocate one-time xmpp data
         names =
           [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
-            compact.collect { |s| s.downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
+            compact.collect { |s| I18n.transliterate(s, '').downcase.gsub(/\s+/, '-').gsub(/[^a-z-]/, '') }
 
         # names =
         #   [auth.info.first_name.presence, auth.info.name.presence, auth.info.nickname.presence].
