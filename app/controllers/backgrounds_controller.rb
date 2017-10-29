@@ -17,11 +17,7 @@ class BackgroundsController < ApplicationController
   def random
     if FtpImages.enabled?
       client = FtpImages.new
-      image = client.images.sample
-      if image
-        image.url = "//#{XMPP_HOST}/ftp?" + { name: Pathname.new(image.url).basename }.to_query
-        render json: image
-      end
+      render json: client.images.sample
     elsif Dropbox.enabled?
       client = Dropbox.new
       render json: client.images.sample

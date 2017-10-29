@@ -9,7 +9,7 @@ class FtpImages
     end
 
     def version_bumper
-      2
+      4
     end
   end
 
@@ -19,9 +19,9 @@ class FtpImages
 
   def get_image_data(name)
     Rvanchat.fetch "#{cache_key}/#{name}", expires_in: 1.hour do
-      found = images.find { |i| Pathname.new(i.url).basename.to_s == name.to_s }
+      found = images.find { |i| Pathname.new(i.path).basename.to_s == name.to_s }
       if found
-        Pathname.new(found.url).read
+        Pathname.new(found.path).read
       end
     end
   end
@@ -30,7 +30,7 @@ class FtpImages
     Rvanchat.fetch "#{cache_key}", expires_in: 1.minute do
       files.select { |f| f.extname =~ /\.jpe?g$/i } .collect do |f|
         url = "//#{XMPP_HOST}/ftp?" + { name: f.basename }.to_query
-        Background.new({ url: f, credit: Dropbox.credit })
+        Background.new({ url: url, credit: Dropbox.credit, path: f.to_s })
       end
     end
   end
@@ -64,6 +64,6 @@ class FtpImages
   end
 
   def get_random_image_data
-    get_image_data(Pathname.new(get_random_image.url).basename.to_s)
+    get_image_data(Pathname.new(get_random_image.path).basename.to_s)
   end
 end
