@@ -5,7 +5,7 @@ class BackgroundsController < ApplicationController
   def gallery
     if FtpImages.enabled?
       client = FtpImages.new
-      render json: client.images
+      @images = client.images
     elsif Dropbox.enabled?
       client = Dropbox.new
       @images = client.images
