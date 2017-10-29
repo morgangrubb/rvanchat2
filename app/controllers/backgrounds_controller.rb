@@ -4,7 +4,7 @@ require 'ftp_images'
 class BackgroundsController < ApplicationController
   def gallery
     if FtpImages.enabled?
-      client = FtpImage.new
+      client = FtpImages.new
       render json: client.images
     elsif Dropbox.enabled?
       client = Dropbox.new
@@ -16,7 +16,7 @@ class BackgroundsController < ApplicationController
 
   def random
     if FtpImages.enabled?
-      client = FtpImage.new
+      client = FtpImages.new
       render json: client.images.sample
     elsif Dropbox.enabled?
       client = Dropbox.new
@@ -50,7 +50,7 @@ class BackgroundsController < ApplicationController
 
   def ftp
     begin
-      client = FtpImage.new
+      client = FtpImages.new
       if params[:path]
         send_data client.get_image_data(params[:path]), type: "image/jpeg", disposition: 'inline'
       else
