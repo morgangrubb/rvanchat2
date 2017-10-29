@@ -64,6 +64,6 @@ class FtpImages
   end
 
   def get_random_image_data
-    get_image_data(get_random_image.url.basename)
+    get_image_data(Pathname.new(get_random_image.url).basename)
   end
 end
