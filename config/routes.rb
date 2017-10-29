@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'links' => 'links#index'
   get 'background' => 'backgrounds#random'
   get 'dropbox' => 'backgrounds#dropbox'
+  get 'ftp' => 'backgrounds#ftp'
 
   resources :backgrounds, only: [] do
     collection do
