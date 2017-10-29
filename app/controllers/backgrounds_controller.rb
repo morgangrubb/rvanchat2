@@ -1,4 +1,5 @@
 require 'dropbox'
+require 'ftp_images'
 
 class BackgroundsController < ApplicationController
   def gallery
