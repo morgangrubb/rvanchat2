@@ -6,4 +6,7 @@
 .gallery
   - @images.each do |image|
     .image
-      = image_tag("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", data: { src: image.url }, alt: "Credit: #{image.credit}", title: "Credit: #{image.credit}")
+      - if image.url =~ %r(^/home)
+        = image_tag("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", data: { src: "//#{XMPP_HOST}/ftp?" + { name: Pathname.new(image.url).basename }.to_query }, alt: "Credit: #{image.credit}", title: "Credit: #{image.credit}")
+      - else
+        = image_tag("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", data: { src: image.url }, alt: "Credit: #{image.credit}", title: "Credit: #{image.credit}")
