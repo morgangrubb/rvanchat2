@@ -9,7 +9,7 @@ class FtpImages
     end
 
     def version_bumper
-      1
+      2
     end
   end
 
@@ -19,7 +19,7 @@ class FtpImages
 
   def get_image_data(name)
     Rvanchat.fetch "#{cache_key}/#{name}", expires_in: 1.hour do
-      found = images.find { |i| Pathname.new(i.url).basename.to_s == name }
+      found = images.find { |i| Pathname.new(i.url).basename.to_s == name.to_s }
       if found
         Pathname.new(found.url).read
       end
@@ -64,6 +64,6 @@ class FtpImages
   end
 
   def get_random_image_data
-    get_image_data(Pathname.new(get_random_image.url).basename)
+    get_image_data(Pathname.new(get_random_image.url).basename.to_s)
   end
 end
