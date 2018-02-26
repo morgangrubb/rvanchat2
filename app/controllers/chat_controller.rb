@@ -35,7 +35,7 @@ class ChatController < ApplicationController
   def candy
     # if current_user.id == 3
     #   if params[:bosh4r]
-    #     instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password, bosh_url: "http://#{XMPP_HOST}/http-bind/")
+    #     instance = Bosh4r::Session.new(current_user.jid, current_user.xmpp_password, bosh_url: "https://#{XMPP_HOST}/http-bind/")
     #     @credentials = {
     #       sid: instance.sid,
     #       jid: instance.jabber_id,
@@ -43,7 +43,7 @@ class ChatController < ApplicationController
     #     }
     #   else
     #     @credentials =
-    #       Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+    #       Bosh.initialize_session current_user.jid, current_user.xmpp_password, "https://#{XMPP_HOST}/http-bind/"
     #   end
 
     #   render layout: "empty"
@@ -52,7 +52,7 @@ class ChatController < ApplicationController
     # end
 
     @credentials =
-      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "https://#{XMPP_HOST}/http-bind/"
 
     render layout: "empty"
   end
@@ -63,7 +63,7 @@ class ChatController < ApplicationController
 
   def prebind
     credentials =
-      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "http://#{XMPP_HOST}/http-bind/"
+      Bosh.initialize_session current_user.jid, current_user.xmpp_password, "https://#{XMPP_HOST}/http-bind/"
 
     # render json: {
     #   jid: current_user[:jid],
