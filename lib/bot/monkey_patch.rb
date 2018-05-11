@@ -64,7 +64,7 @@ module Jabber
         }
         sender_nick = msg.from.resource
 
-        sender_nick = ExtendedChatMessageNick.new(sender_nick)
+        sender_nick = ExtendedChatMessageNick.new(sender_nick || '')
         sender_nick.jabber_message_resource = msg
 
         if msg.subject
