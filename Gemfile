@@ -61,11 +61,13 @@ gem 'omniauth-google-oauth2'
 
 
 # Bosh
-gem 'rest_client'
+gem 'rest-client'
 gem 'hpricot'
 
 # XMPP
 gem 'xmpp4r'
+
+gem 'nokogiri', '~> 1.8.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
